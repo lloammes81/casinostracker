@@ -1,0 +1,4491 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CasinoTrack Pro - Sistema Profesional</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #06b6d4;
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --border: #e5e7eb;
+            --bg-main: #f3f4f6;
+            --bg-card: #ffffff;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+        }
+
+        [data-theme="dark"] {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #06b6d4;
+            --dark: #f9fafb;
+            --light: #0f172a;
+            --border: #1e293b;
+            --bg-main: #020617;
+            --bg-card: #0f172a;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            transition: background 0.3s ease;
+        }
+
+        /* Login Screen */
+        .login-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 50px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .login-logo {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .login-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .login-subtitle {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* App Container */
+        .app-container {
+            display: none;
+        }
+
+        .app-container.active {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--bg-card);
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            padding: 30px 25px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .sidebar-logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--info));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .sidebar-logo-text {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .sidebar-user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: var(--light);
+            border-radius: 10px;
+        }
+
+        .sidebar-user-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .sidebar-user-info {
+            flex: 1;
+        }
+
+        .sidebar-user-name {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        .sidebar-user-email {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 20px 15px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            margin-bottom: 8px;
+            border-radius: 10px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .nav-item:hover {
+            background: var(--light);
+            color: var(--text-primary);
+        }
+
+        .nav-item.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .nav-item-icon {
+            font-size: 20px;
+            width: 24px;
+            text-align: center;
+        }
+
+        .sidebar-footer {
+            padding: 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        .logout-btn {
+            width: 100%;
+            padding: 12px;
+            background: #fee2e2;
+            color: #991b1b;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #fecaca;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-main);
+        }
+
+        .topbar {
+            background: var(--bg-card);
+            padding: 20px 30px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .topbar-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .topbar-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .theme-toggle {
+            width: 50px;
+            height: 26px;
+            background: var(--border);
+            border-radius: 13px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .theme-toggle:hover {
+            background: var(--primary);
+        }
+
+        .theme-toggle-slider {
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        [data-theme="dark"] .theme-toggle-slider {
+            left: 26px;
+        }
+
+        .content-area {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .view-section {
+            display: none;
+        }
+
+        .view-section.active {
+            display: block;
+        }
+
+        /* Casino Showcase Section */
+        .casino-showcase {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .casino-showcase::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #f59e0b, #ef4444, #8b5cf6, #3b82f6, #10b981);
+            background-size: 200% 100%;
+            animation: gradientShift 3s linear infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .showcase-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .showcase-title {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #f59e0b, #ef4444, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .showcase-subtitle {
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        .casinos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .casino-card-pro {
+            background: var(--bg-card);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: 2px solid transparent;
+            position: relative;
+        }
+
+        .casino-card-pro:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+            border-color: var(--primary);
+        }
+
+        .casino-card-pro:hover .casino-card-image::after {
+            content: '🎮 Explora la página en vivo';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(37, 99, 235, 0.95);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 3;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .casino-iframe-container:hover {
+            cursor: grab;
+        }
+
+        .casino-iframe-container:active {
+            cursor: grabbing;
+        }
+
+        .casino-card-image {
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .casino-iframe-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .casino-iframe {
+            width: 1400px;
+            height: 900px;
+            border: none;
+            transform: scale(0.22);
+            transform-origin: center center;
+            pointer-events: auto;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -700px;
+            margin-top: -450px;
+        }
+
+        .casino-card-pro:hover .casino-iframe {
+            pointer-events: auto;
+        }
+
+        .casino-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 100%);
+            display: flex;
+            align-items: flex-end;
+            padding: 15px;
+            z-index: 2;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .casino-card-pro:hover .casino-overlay {
+            opacity: 0.7;
+        }
+
+        .casino-logo-badge {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 8px 16px;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 16px;
+            color: #1f2937;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .casino-logo-emoji {
+            font-size: 24px;
+        }
+
+        .casino-card-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shimmer 4s infinite;
+            z-index: 1;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .casino-card-body {
+            padding: 20px;
+        }
+
+        .casino-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .casino-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .casino-stat {
+            background: var(--light);
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .casino-stat-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .casino-stat-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .casino-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            background: linear-gradient(135deg, var(--success), var(--info));
+            color: white;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .casino-description {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .casino-cta {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .casino-cta:hover {
+            background: var(--primary-dark);
+            transform: scale(1.02);
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 2px solid var(--border);
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--info));
+        }
+
+        .stat-card.success::before {
+            background: linear-gradient(90deg, var(--success), #34d399);
+        }
+
+        .stat-card.warning::before {
+            background: linear-gradient(90deg, var(--warning), #fbbf24);
+        }
+
+        .stat-card.info::before {
+            background: linear-gradient(90deg, var(--info), #22d3ee);
+        }
+
+        .stat-card.primary {
+            border-color: var(--primary);
+        }
+
+        .stat-card.success {
+            border-color: var(--success);
+        }
+
+        .stat-card.danger {
+            border-color: var(--danger);
+        }
+
+        .stat-card.warning {
+            border-color: var(--warning);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .stat-icon.primary {
+            background: #dbeafe;
+            color: var(--primary);
+        }
+
+        .stat-icon.success {
+            background: #d1fae5;
+            color: var(--success);
+        }
+
+        .stat-icon.danger {
+            background: #fee2e2;
+            color: var(--danger);
+        }
+
+        .stat-icon.warning {
+            background: #fef3c7;
+            color: var(--warning);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        /* Card */
+        .card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .btn-warning {
+            background: var(--warning);
+            color: white;
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 13px;
+        }
+
+        /* Table */
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: var(--light);
+        }
+
+        th {
+            text-align: left;
+            padding: 16px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 18px 16px;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        tr:hover {
+            background: var(--light);
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-danger {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .badge-info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(8px);
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 0;
+            width: 100%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-content.large {
+            max-width: 1000px;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary), var(--info));
+            color: white;
+            padding: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .modal-body {
+            padding: 35px;
+        }
+
+        .close-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: white;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        /* AMOE Info Sections */
+        .amoe-section {
+            margin-bottom: 30px;
+        }
+
+        .amoe-section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .amoe-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--info));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .amoe-content {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 12px;
+            line-height: 1.8;
+        }
+
+        .amoe-step {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: var(--bg-card);
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .step-number {
+            width: 35px;
+            height: 35px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+        }
+
+        .step-description {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border-left: 4px solid var(--warning);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .highlight-title {
+            font-weight: 700;
+            color: #92400e;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .highlight-text {
+            color: #78350f;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .info-grid-amoe {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .info-item-amoe {
+            background: var(--bg-card);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid var(--border);
+        }
+
+        .info-label-amoe {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .info-value-amoe {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Form */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .required {
+            color: var(--danger);
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s;
+            font-family: inherit;
+            background: var(--bg-card);
+            color: var(--text-primary);
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-help {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 6px;
+        }
+
+        /* Address Section */
+        .address-type-selector {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .address-type-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid var(--border);
+            background: var(--bg-card);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .address-type-btn:hover {
+            border-color: var(--primary);
+        }
+
+        .address-type-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        /* Utility Classes */
+        .text-success {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .text-danger {
+            color: var(--danger);
+            font-weight: 600;
+        }
+
+        .text-muted {
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        .link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+        }
+
+        .d-flex {
+            display: flex;
+        }
+
+        .align-items-center {
+            align-items: center;
+        }
+
+        .justify-between {
+            justify-content: space-between;
+        }
+
+        .gap-2 {
+            gap: 8px;
+        }
+
+        .mb-3 {
+            margin-bottom: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .casinos-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid-amoe {
+                grid-template-columns: 1fr;
+            }
+
+            .chat-container {
+                grid-template-columns: 1fr;
+            }
+
+            .chat-sidebar {
+                display: none;
+            }
+        }
+
+        /* Community Chat */
+        .chat-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+            height: 600px;
+        }
+
+        .chat-main {
+            background: var(--bg-card);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .online-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--success);
+            font-size: 14px;
+        }
+
+        .online-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .chat-message {
+            display: flex;
+            gap: 12px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-message.own {
+            flex-direction: row-reverse;
+        }
+
+        .chat-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .chat-bubble {
+            max-width: 70%;
+            background: var(--light);
+            padding: 12px 16px;
+            border-radius: 16px;
+            border-top-left-radius: 4px;
+        }
+
+        .chat-message.own .chat-bubble {
+            background: var(--primary);
+            color: white;
+            border-radius: 16px;
+            border-top-right-radius: 4px;
+            border-top-left-radius: 16px;
+        }
+
+        .chat-author {
+            font-weight: 600;
+            font-size: 13px;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+        }
+
+        .chat-message.own .chat-author {
+            color: white;
+        }
+
+        .chat-text {
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--text-primary);
+        }
+
+        .chat-message.own .chat-text {
+            color: white;
+        }
+
+        .chat-time {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .chat-message.own .chat-time {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .chat-input-area {
+            padding: 20px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 12px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 25px;
+            font-size: 14px;
+            background: var(--bg-card);
+            color: var(--text-primary);
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .chat-send {
+            width: 48px;
+            height: 48px;
+            background: var(--primary);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .chat-send:hover {
+            background: var(--primary-dark);
+            transform: scale(1.1);
+        }
+
+        .chat-sidebar {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .sidebar-section-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .user-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .user-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .user-item:hover {
+            background: var(--light);
+        }
+
+        .user-status {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--success);
+        }
+
+        .user-name {
+            flex: 1;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        /* Email Composer */
+        .email-field {
+            margin-bottom: 20px;
+        }
+
+        .email-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Progress Bar */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .loading-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .loading-container {
+            text-align: center;
+            padding: 40px;
+            background: var(--bg-card);
+            border-radius: 20px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+            min-width: 400px;
+        }
+
+        .loading-logo {
+            font-size: 64px;
+            margin-bottom: 20px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .loading-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--info));
+            border-radius: 10px;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px rgba(37, 99, 235, 0.5);
+        }
+
+        .progress-text {
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* Casino Info Panel */
+        .casino-info-panel {
+            background: linear-gradient(135deg, var(--primary), var(--info));
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            color: white;
+            display: none;
+        }
+
+        .casino-info-panel.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .casino-info-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .casino-info-emoji {
+            font-size: 48px;
+        }
+
+        .casino-info-name {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .casino-info-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .casino-info-stat {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .casino-info-stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .casino-info-stat-label {
+            font-size: 12px;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .email-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            background: var(--bg-card);
+            color: var(--text-primary);
+            font-family: inherit;
+        }
+
+        .email-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .email-textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 16px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            background: var(--bg-card);
+            color: var(--text-primary);
+            font-family: inherit;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        .email-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .email-templates {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .template-btn {
+            padding: 10px;
+            background: var(--light);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .template-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .email-preview {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .email-preview-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .email-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="login-logo">🎰</div>
+                <h1 class="login-title">CasinoTrack Pro</h1>
+                <p class="login-subtitle">Sistema Profesional de Gestión AMOE</p>
+            </div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label">Usuario</label>
+                    <input type="text" id="loginUsername" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Contraseña</label>
+                    <input type="password" id="loginPassword" class="form-input" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 15px;">
+                    Iniciar Sesión
+                </button>
+                
+                <button type="button" onclick="showRegister()" class="btn" style="width: 100%; background: var(--light); color: var(--text-primary);">
+                    Crear Cuenta
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Screen -->
+    <div id="registerScreen" class="login-container" style="display: none;">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="login-logo">📝</div>
+                <h1 class="login-title">Crear Cuenta</h1>
+                <p class="login-subtitle">Únete a la comunidad</p>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-container">
+            <div class="loading-logo">🎰</div>
+            <h2 class="loading-title">Actualizando Sistema</h2>
+            <p class="loading-subtitle" id="loadingMessage">Buscando nuevos casinos...</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+            </div>
+            <div class="progress-text" id="progressText">0%</div>
+        </div>
+    </div>
+            </div>
+            
+            <form id="registerForm">
+                <div class="form-group">
+                    <label class="form-label">Nombre Completo</label>
+                    <input type="text" id="regName" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" id="regEmail" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Usuario</label>
+                    <input type="text" id="regUsername" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Contraseña</label>
+                    <input type="password" id="regPassword" class="form-input" required>
+                </div>
+                
+                <button type="submit" class="btn btn-success" style="width: 100%; margin-bottom: 15px;">
+                    Registrarse
+                </button>
+                
+                <button type="button" onclick="showLogin()" class="btn" style="width: 100%; background: var(--light); color: var(--text-primary);">
+                    Ya tengo cuenta
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="appContainer" class="app-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <div class="sidebar-logo-icon">CT</div>
+                    <div class="sidebar-logo-text">CasinoTrack Pro</div>
+                </div>
+                
+                <div class="sidebar-user">
+                    <div class="sidebar-user-avatar" id="userAvatar">A</div>
+                    <div class="sidebar-user-info">
+                        <div class="sidebar-user-name" id="userName">Usuario</div>
+                        <div class="sidebar-user-email" id="userEmail"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9eebedfbecdefbf3fff7f2b0fdf1f3">[email&#160;protected]</a></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="sidebar-nav">
+                <button class="nav-item active" onclick="showSection('dashboard')" data-section="dashboard">
+                    <span class="nav-item-icon">📊</span>
+                    Dashboard
+                </button>
+                <button class="nav-item" onclick="showSection('casinos')" data-section="casinos">
+                    <span class="nav-item-icon">🎰</span>
+                    Casinos
+                </button>
+                <button class="nav-item" onclick="showSection('cartas')" data-section="cartas">
+                    <span class="nav-item-icon">✉️</span>
+                    Cartas
+                </button>
+                <button class="nav-item" onclick="showSection('pagos')" data-section="pagos">
+                    <span class="nav-item-icon">💳</span>
+                    Pagos
+                </button>
+                <button class="nav-item" onclick="showSection('comunidad')" data-section="comunidad">
+                    <span class="nav-item-icon">💬</span>
+                    Comunidad
+                </button>
+            </div>
+            
+            <div class="sidebar-footer">
+                <button class="logout-btn" onclick="logout()">
+                    🚪 Cerrar Sesión
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Topbar -->
+            <div class="topbar">
+                <h1 class="topbar-title" id="pageTitle">Dashboard</h1>
+                <div class="topbar-actions">
+                    <div class="theme-toggle" onclick="toggleTheme()">
+                        <div class="theme-toggle-slider" id="themeToggle">🌙</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Dashboard Section -->
+                <div id="dashboard" class="view-section active">
+                    <!-- Estadísticas Principales -->
+                    <div class="stats-grid">
+                        <div class="stat-card success" onclick="showStatDetail('casinos')">
+                            <div class="stat-icon">🎰</div>
+                            <div class="stat-value" id="statTotalCasinos">0</div>
+                            <div class="stat-label">Total Casinos</div>
+                            <div class="stat-trend">Click para ver detalles →</div>
+                        </div>
+                        
+                        <div class="stat-card info" onclick="showStatDetail('cartas')">
+                            <div class="stat-icon">✉️</div>
+                            <div class="stat-value" id="statTotalCartas">0</div>
+                            <div class="stat-label">Cartas Enviadas</div>
+                            <div class="stat-trend">Click para ver detalles →</div>
+                        </div>
+                        
+                        <div class="stat-card success" onclick="showStatDetail('cobrado')">
+                            <div class="stat-icon">💰</div>
+                            <div class="stat-value" id="statTotalCobrado">$0</div>
+                            <div class="stat-label">Total Cobrado</div>
+                            <div class="stat-trend">Click para ver detalles →</div>
+                        </div>
+                        
+                        <div class="stat-card warning" onclick="showStatDetail('porCobrar')">
+                            <div class="stat-icon">⏰</div>
+                            <div class="stat-value" id="statPorCobrar">$0</div>
+                            <div class="stat-label">Por Cobrar</div>
+                            <div class="stat-trend">Click para ver detalles →</div>
+                        </div>
+                    </div>
+
+                    <!-- Casino Showcase -->
+                    <div class="casino-showcase">
+                        <div class="showcase-header">
+                            <h2 class="showcase-title">🎰 30 Casinos Disponibles - Programa AMOE</h2>
+                            <p class="showcase-subtitle">Gana Sweeps Coins enviando cartas por correo • 100% Legal en USA • Click para ver instrucciones</p>
+                        </div>
+                        <div class="casinos-grid" id="casinosGrid">
+                            <!-- Casinos will be rendered here -->
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Estado de Cuentas</h3>
+                        </div>
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Casino</th>
+                                        <th>Total Cartas</th>
+                                        <th>Pagadas</th>
+                                        <th>Pendientes</th>
+                                        <th>Precio/Carta</th>
+                                        <th>Total Cobrado</th>
+                                        <th>Por Cobrar</th>
+                                        <th>Último Pago</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dashboardTable">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Casinos Section -->
+                <div id="casinos" class="view-section">
+                    <div class="d-flex justify-between align-items-center mb-3">
+                        <button class="btn btn-primary" onclick="importarCasinosPopulares()">
+                            📥 Importar 30 Casinos AMOE Verificados
+                        </button>
+                        <button class="btn btn-success" onclick="openCasinoModal()">
+                            ➕ Agregar Casino Personalizado
+                        </button>
+                    </div>
+
+                    <div class="card">
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Casino</th>
+                                        <th>Contacto</th>
+                                        <th>Dirección</th>
+                                        <th>Precio/Carta</th>
+                                        <th>Estado</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="casinosTable">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cartas Section -->
+                <div id="cartas" class="view-section">
+                    <div class="d-flex justify-between align-items-center mb-3">
+                        <select id="filterCasino" class="form-select" style="width: 250px;" onchange="renderCartas()">
+                            <option value="">Todos los Casinos</option>
+                        </select>
+                        <button class="btn btn-primary" onclick="openCartaModal()">
+                            ➕ Registrar Carta Enviada
+                        </button>
+                    </div>
+
+                    <div class="card">
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Casino</th>
+                                        <th>Tipo</th>
+                                        <th>Fecha</th>
+                                        <th>Precio</th>
+                                        <th>Estado</th>
+                                        <th>Notas</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cartasTable">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pagos Section -->
+                <div id="pagos" class="view-section">
+                    <div class="d-flex justify-between align-items-center mb-3">
+                        <div></div>
+                        <button class="btn btn-success" onclick="openPagoModal()">
+                            ➕ Registrar Pago Recibido
+                        </button>
+                    </div>
+
+                    <div class="card">
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Casino</th>
+                                        <th>Fecha</th>
+                                        <th>Monto</th>
+                                        <th>Cartas</th>
+                                        <th>Método</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="pagosTable">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comunidad Section -->
+                <div id="comunidad" class="view-section">
+                    <div class="chat-container">
+                        <div class="chat-main">
+                            <div class="chat-header">
+                                <h3 class="chat-title">💬 Chat Comunitario AMOE</h3>
+                                <div class="online-badge">
+                                    <span class="online-dot"></span>
+                                    <span id="onlineCount">1</span> en línea
+                                </div>
+                            </div>
+                            
+                            <div class="chat-messages" id="chatMessages">
+                                <!-- Messages will be rendered here -->
+                            </div>
+                            
+                            <div class="chat-input-area">
+                                <input type="text" class="chat-input" id="chatInput" placeholder="Comparte tu experiencia con AMOE..." maxlength="500">
+                                <button class="chat-send" onclick="sendMessage()">📤</button>
+                            </div>
+                        </div>
+                        
+                        <div class="chat-sidebar">
+                            <h4 class="sidebar-section-title">Usuarios Conectados (<span id="onlineCountSidebar">0</span>)</h4>
+                            <div class="user-list" id="userList">
+                                <!-- Users will be rendered here -->
+                            </div>
+                            
+                            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border);">
+                                <h4 class="sidebar-section-title">📊 Estadísticas del Chat</h4>
+                                <div style="font-size: 12px; color: var(--text-secondary); line-height: 1.8;">
+                                    <p style="margin-bottom: 10px;">💬 <strong id="totalMessages">0</strong> mensajes totales</p>
+                                    <p style="margin-bottom: 10px;">👥 <strong id="totalUsers">0</strong> usuarios registrados</p>
+                                    <p style="margin-bottom: 10px;">✉️ <strong id="totalLetters">0</strong> cartas enviadas (comunidad)</p>
+                                    <p>🔄 Actualizado en tiempo real</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal AMOE Info -->
+    <div id="modalAMOE" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h2 class="modal-title" id="amoeModalTitle">Casino Info</h2>
+                <button class="close-btn" onclick="closeAMOEModal()">×</button>
+            </div>
+            <div class="modal-body" id="amoeModalBody">
+                <!-- Content will be dynamically generated -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Casino Form -->
+    <div id="modalCasino" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Nuevo Casino</h2>
+                <button class="close-btn" onclick="closeCasinoModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="casinoForm">
+                    <div class="form-grid">
+                        <div class="form-group full">
+                            <label class="form-label">Nombre del Casino <span class="required">*</span></label>
+                            <input type="text" id="casinoNombre" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" id="casinoEmail" class="form-input">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Website</label>
+                            <input type="url" id="casinoWebsite" class="form-input">
+                        </div>
+                        
+                        <div class="form-group full">
+                            <label class="form-label">Precio por Carta (SC Value) <span class="required">*</span></label>
+                            <input type="number" id="casinoPrecio" class="form-input" step="0.01" required>
+                        </div>
+                        
+                        <div class="form-group full">
+                            <label class="form-label">Dirección Postal</label>
+                            <input type="text" id="casinoPobox" class="form-input" placeholder="P.O. Box 12345">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Ciudad</label>
+                            <input type="text" id="casinoPoboxCiudad" class="form-input">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Estado</label>
+                            <input type="text" id="casinoPoboxEstado" class="form-input">
+                        </div>
+                        
+                        <div class="form-group full">
+                            <label class="form-label">Notas</label>
+                            <textarea id="casinoNotas" class="form-textarea"></textarea>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        Guardar Casino
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Carta -->
+    <div id="modalCarta" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Registrar Carta Enviada</h2>
+                <button class="close-btn" onclick="closeCartaModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <!-- Casino Info Panel -->
+                <div id="casinoInfoPanel" class="casino-info-panel">
+                    <div class="casino-info-header">
+                        <div class="casino-info-emoji" id="infoCasinoEmoji">🎰</div>
+                        <div>
+                            <div class="casino-info-name" id="infoCasinoName">Selecciona un casino</div>
+                        </div>
+                    </div>
+                    <div class="casino-info-stats">
+                        <div class="casino-info-stat">
+                            <div class="casino-info-stat-value" id="infoTotalCartas">0</div>
+                            <div class="casino-info-stat-label">Total Cartas</div>
+                        </div>
+                        <div class="casino-info-stat">
+                            <div class="casino-info-stat-value" id="infoPendientes">0</div>
+                            <div class="casino-info-stat-label">Pendientes</div>
+                        </div>
+                        <div class="casino-info-stat">
+                            <div class="casino-info-stat-value" id="infoPorCobrar">$0</div>
+                            <div class="casino-info-stat-label">Por Cobrar</div>
+                        </div>
+                        <div class="casino-info-stat">
+                            <div class="casino-info-stat-value" id="infoValorCarta">$0</div>
+                            <div class="casino-info-stat-label">Valor/Carta</div>
+                        </div>
+                    </div>
+                </div>
+
+                <form id="cartaForm">
+                    <div class="form-grid">
+                        <div class="form-group full">
+                            <label class="form-label">Casino <span class="required">*</span></label>
+                            <select id="cartaCasino" class="form-select" required onchange="updateCasinoInfo()">
+                                <option value="">Seleccionar</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Fecha de Envío <span class="required">*</span></label>
+                            <input type="date" id="cartaFecha" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Cantidad de Cartas <span class="required">*</span></label>
+                            <input type="number" id="cartaCantidad" class="form-input" min="1" value="1" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Valor por Carta (SC)</label>
+                            <input type="number" id="cartaPrecio" class="form-input" readonly>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Total SC</label>
+                            <input type="number" id="cartaTotal" class="form-input" readonly style="font-weight: 700; color: var(--success);">
+                        </div>
+                        
+                        <div class="form-group full">
+                            <label class="form-label">Notas</label>
+                            <textarea id="cartaNotas" class="form-textarea" placeholder="Ej: Código postal incluido, tinta azul usada"></textarea>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        Registrar Carta(s)
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Pago -->
+    <div id="modalPago" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Registrar Pago Recibido</h2>
+                <button class="close-btn" onclick="closePagoModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="pagoForm">
+                    <div class="form-grid">
+                        <div class="form-group full">
+                            <label class="form-label">Casino <span class="required">*</span></label>
+                            <select id="pagoCasino" class="form-select" required>
+                                <option value="">Seleccionar</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Fecha <span class="required">*</span></label>
+                            <input type="date" id="pagoFecha" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Monto (SC) <span class="required">*</span></label>
+                            <input type="number" id="pagoMonto" class="form-input" step="0.01" required>
+                        </div>
+                        
+                        <div class="form-group full">
+                            <label class="form-label">Método</label>
+                            <select id="pagoMetodo" class="form-select">
+                                <option value="Sweeps Coins">Sweeps Coins</option>
+                                <option value="Cash Prize">Cash Prize</option>
+                                <option value="Gift Card">Gift Card</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-success" style="width: 100%;">
+                        Registrar Pago
+                    </button>
+                    </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal Email -->
+    <div id="modalEmail" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h2 class="modal-title">📧 Enviar Email al Casino</h2>
+                <button class="close-btn" onclick="closeEmailModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="email-field">
+                    <label class="email-label">Para (Casino)</label>
+                    <input type="text" id="emailTo" class="email-input" readonly>
+                </div>
+
+                <div class="email-templates">
+                    <button class="template-btn" onclick="useTemplate('seguimiento')">
+                        📮 Seguimiento de Carta
+                    </button>
+                    <button class="template-btn" onclick="useTemplate('consulta')">
+                        ❓ Consulta AMOE
+                    </button>
+                    <button class="template-btn" onclick="useTemplate('problema')">
+                        ⚠️ Reportar Problema
+                    </button>
+                </div>
+
+                <div class="email-field">
+                    <label class="email-label">Asunto</label>
+                    <input type="text" id="emailSubject" class="email-input" placeholder="Asunto del email">
+                </div>
+
+                <div class="email-field">
+                    <label class="email-label">Mensaje</label>
+                    <textarea id="emailBody" class="email-textarea" placeholder="Escribe tu mensaje aquí..."></textarea>
+                </div>
+
+                <div class="email-preview">
+                    <div class="email-preview-label">Vista Previa</div>
+                    <div id="emailPreview" style="color: var(--text-primary); font-size: 14px; line-height: 1.6;">
+                        Tu mensaje aparecerá aquí...
+                    </div>
+                </div>
+
+                <div class="email-actions">
+                    <button class="btn btn-primary" onclick="sendEmail()" style="flex: 1;">
+                        📤 Abrir en Email
+                    </button>
+                    <button class="btn" onclick="copyEmail()" style="flex: 1; background: var(--warning); color: white;">
+                        📋 Copiar Texto
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Estadísticas Detalladas -->
+    <div id="modalStatDetail" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h2 class="modal-title" id="statDetailTitle">Detalles</h2>
+                <button class="close-btn" onclick="closeStatDetail()">×</button>
+            </div>
+            <div class="modal-body">
+                <div id="statDetailContent" class="detail-list">
+                    <!-- Content will be dynamically loaded -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+// CasinoTrack Pro - Complete Application Logic
+
+
+// Data & State
+let currentUser = null;
+let users = JSON.parse(localStorage.getItem('ct_users')) || [];
+let casinos = [];
+let cartas = [];
+let pagos = [];
+let messages = JSON.parse(localStorage.getItem('ct_messages')) || [];
+let currentTheme = localStorage.getItem('ct_theme') || 'light';
+
+// Casino colors for cards
+const casinoColors = [
+    'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+    'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+    'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+    'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+    'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+    'linear-gradient(135deg, #30cfd0 0%, #330867 100%)',
+    'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
+    'linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)',
+    'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)',
+    'linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%)',
+    'linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%)',
+    'linear-gradient(135deg, #f78ca0 0%, #f9748f 100%)'
+];
+
+// Popular AMOE Casinos Database
+const casinosPopulares = [
+    {
+        nombre: 'Stake.us',
+        emoji: '🎲',
+        precioPorCarta: 5.00,
+        pobox: 'P.O. Box 123456',
+        poboxCiudad: 'Dallas',
+        poboxEstado: 'TX',
+        poboxZip: '75201',
+        email: 'support@stake.us',
+        website: 'https://stake.us',
+        tiempoRespuesta: '3-10 semanas',
+        codigoRequerido: true,
+        tamañoPostal: '4" x 6"',
+        sobre: '#10 estampado',
+        tinta: 'Negra o azul',
+        cartasPorSobre: 1,
+        limiteEntradas: 'Ilimitado',
+        instrucciones: 'Escribe "Stake Cash Credits" en el sobre. Incluye tu código postal único generado en el sitio web.',
+        notas: 'Más de 1,400 juegos. Uno de los casinos sweepstakes más grandes. Respuesta rápida.',
+        requisitos: [
+            'Postal o papel blanco de 4" x 6", sin doblar',
+            'Sobre #10 con estampilla',
+            'Dirección de retorno completa',
+            'Escribir "Stake Cash Credits" en el sobre',
+            'Incluir código postal único (generado en sitio)',
+            'Escritura a mano clara y legible'
+        ]
+    },
+    {
+        nombre: 'WOW Vegas',
+        emoji: '🎰',
+        precioPorCarta: 3.00,
+        pobox: 'MW Services Limited, P.O. Box 9402',
+        poboxCiudad: 'Manchester',
+        poboxEstado: 'NH',
+        poboxZip: '03108',
+        email: 'support@wowvegas.com',
+        website: 'https://wowvegas.com',
+        tiempoRespuesta: '3-8 semanas',
+        codigoRequerido: true,
+        tamañoPostal: '4" x 6"',
+        sobre: '#10 estampado',
+        tinta: 'NEGRA (TODO EN MAYÚSCULAS)',
+        cartasPorSobre: 1,
+        limiteEntradas: 'Ilimitado',
+        instrucciones: 'TODO debe estar en MAYÚSCULAS con tinta NEGRA. Código postal de 11 dígitos requerido.',
+        notas: 'Más de 1,000 juegos. Patrocinio de Paris Hilton. Proceso estricto pero confiable.',
+        requisitos: [
+            'Postal blanca o papel blanco de 4" x 6"',
+            'Tinta NEGRA solamente',
+            'TODO en MAYÚSCULAS',
+            'Código postal de 11 dígitos',
+            'Sobre #10 estampado',
+            'No usar software automatizado'
+        ]
+    },
+    {
+        nombre: 'McLuck',
+        emoji: '🍀',
+        precioPorCarta: 3.50,
+        pobox: 'P.O. Box 7845',
+        poboxCiudad: 'Dover',
+        poboxEstado: 'DE',
+        poboxZip: '19901',
+        email: 'hello@mcluck.com',
+        website: 'https://mcluck.com',
+        tiempoRespuesta: '4-10 semanas',
+        codigoRequerido: true,
+        tamañoPostal: '4" x 6"',
+        sobre: '#10',
+        tinta: 'Negra o azul',
+        cartasPorSobre: 1,
+        limiteEntradas: 'Ilimitado',
+        instrucciones: 'Postal escrita a mano con código único. Incluye declaración de solicitud.',
+        notas: 'Interfaz amigable. Buen soporte al cliente. Bonos diarios generosos.',
+        requisitos: [
+            'Postal de 4" x 6" sin doblar',
+            'Código de solicitud postal único',
+            'Declaración escrita a mano',
+            'Dirección de retorno',
+            'Sobre estampado',
+            'Información legible'
+        ]
+    },
+    {
+        nombre: 'Crown Coins',
+        emoji: '👑',
+        precioPorCarta: 2.00,
+        pobox: 'Crown Coins Casino, P.O. Box 5114',
+        poboxCiudad: 'Fredericksburg',
+        poboxEstado: 'VA',
+        poboxZip: '22403-5114',
+        email: 'support@crowncoins.com',
+        website: 'https://crowncoins.com',
+        tiempoRespuesta: '2-6 semanas',
+        codigoRequerido: false,
+        tamañoPostal: '4" x 6"',
+        sobre: '#10 estampado',
+        tinta: 'Negra',
+        cartasPorSobre: 1,
+        limiteEntradas: 'Ilimitado',
+        instrucciones: 'Escribir "Sweepstakes Coins" en el sobre. Sin código requerido.',
+        notas: 'Proceso más simple. Respuesta más rápida. Buen casino para principiantes.',
+        requisitos: [
+            'Tarjeta de 4" x 6" sin doblar',
+            'Tinta negra solamente',
+            'Escribir "Sweepstakes Coins" en sobre',
+            'Sobre #10 con estampilla',
+            'Dirección de retorno completa',
+            'Una tarjeta por sobre'
+        ]
+    },
+    {
+        nombre: 'Pulsz',
+        emoji: '⚡',
+        precioPorCarta: 4.00,
+        pobox: 'P.O. Box 3025',
+        poboxCiudad: 'Wilmington',
+        poboxEstado: 'DE',
+        poboxZip: '19804',
+        email: 'contact@pulsz.com',
+        website: 'https://pulsz.com',
+        tiempoRespuesta: '3-9 semanas',
+        codigoRequerido: true,
+        tamañoPostal: '4" x 6"',
+        sobre: '#10',
+        tinta: 'Cualquier color',
+        cartasPorSobre: 1,
+        limiteEntradas: 'Ilimitado',
+        instrucciones: 'Código postal generado en cuenta. Gran variedad de juegos.',
+        notas: 'Más de 500 juegos. Diseño moderno. Buen programa de fidelidad.',
+        requisitos: [
+            'Postal de 4" x 6"',
+            'Código postal único',
+            'Solicitud escrita a mano',
+            'Sobre estampado',
+            'Dirección de retorno',
+            'Entradas ilimitadas permitidas'
+        ]
+    },
+    {
+        nombre: 'Chumba Casino',
+        emoji: '🐘',
+        precioPorCarta: 3.00,
+        pobox: 'P.O. Box 4109',
+        poboxCiudad: 'Seattle',
+        poboxEstado: 'WA',
+        poboxZip: '98104',
+        email: 'support@chumbacasino.com',
+        website: 'https://chumbacasino.com',
+        tiempoRespuesta: '4-12 semanas',
+        codigoRequerido: true,
+        tamañoPostal: '4" x 6"',
+        sobre: '#10 estampado',
+        tinta: 'Negra o azul',
+        cartasPorSobre: 1,
+        limiteEntradas: 'Ilimitado',
+        instrucciones: 'Uno de los pioneros. Código de solicitud postal en reglas de sweepstakes.',
+        notas: 'Establecido desde 2017. Muy confiable. Gran reputación.',
+        requisitos: [
+            'Postal de 4" x 6" sin doblar',
+            'Código postal único (válido 30 días)',
+            'Escritura clara y legible',
+            'Sobre #10 estampado',
+            'Dirección de retorno completa',
+            'Declaración de solicitud'
+        ]
+    },
+    {
+        nombre: 'LuckyLand Slots',
+        emoji: '🎱',
+        precioPorCarta: 2.50,
+        pobox: 'P.O. Box 2734',
+        poboxCiudad: 'Austin',
+        poboxEstado: 'TX',
+        poboxZip: '78701',
+        email: 'help@luckylandslots.com',
+        website: 'https://luckylandslots.com',
+        tiempoRespuesta: '3-8 semanas',
+        codigoRequerido: true,
+        tamañoPostal: '4" x 6"',
+        sobre: '#10',
+        tinta: 'Negra',
+        cartasPorSobre: 1,
+        limiteEntradas: 'Ilimitado',
+        instrucciones: 'Especializado en slots. Código postal requerido.',
+        notas: 'Excelente para fanáticos de slots. Más de 200 juegos.',
+        requisitos: [
+            'Tarjeta de 4" x 6"',
+            'Código postal generado',
+            'Tinta negra',
+            'Sobre #10 con estampilla',
+            'Dirección completa',
+            'Escritura a mano'
+        ]
+    },
+    {
+        nombre: 'Funzpoints',
+        emoji: '🎪',
+        precioPorCarta: 4.50,
+        pobox: 'P.O. Box 8932',
+        poboxCiudad: 'Las Vegas',
+        poboxEstado: 'NV',
+        poboxZip: '89109',
+        email: 'support@funzpoints.com',
+        website: 'https://funzpoints.com',
+        tiempoRespuesta: '2-7 semanas',
+        codigoRequerido: false,
+        tamañoPostal: 'Standard postcard',
+        sobre: 'Estampado',
+        tinta: 'Cualquier color',
+        cartasPorSobre: 1,
+        limiteEntradas: 'Ilimitado',
+        instrucciones: 'Proceso simple. Sin código necesario. Respuesta rápida.',
+        notas: 'Uno de los más rápidos en responder. Interfaz simple.',
+        requisitos: [
+            'Postal estándar',
+            'Escritura a mano',
+            'Dirección de retorno',
+            'Estampilla',
+            'Solicitud clara',
+            'Sin límite de entradas'
+        ]
+    },
+    {
+        nombre: 'Real Prize',
+        emoji: '💎',
+        precioPorCarta: 3.00,
+        pobox: 'P.O. Box 1542',
+        poboxCiudad: 'Miami',
+        poboxEstado: 'FL',
+        poboxZip: '33101',
+        email: 'info@realprize.com',
+        website: 'https://realprize.com',
+        tiempoRespuesta: '3-10 semanas',
+        codigoRequerido: true,
+        tamañoPostal: '4" x 6"',
+        sobre: '#10',
+        tinta: 'Negra o azul',
+        cartasPorSobre: 1,
+        limiteEntradas: 'Ilimitado',
+        instrucciones: 'Código postal único. Buen bono de bienvenida.',
+        notas: 'Gran bono inicial. Programa VIP excelente.',
+        requisitos: [
+            'Postal de 4" x 6"',
+            'Código postal generado',
+            'Escritura clara',
+            'Sobre estampado',
+            'Dirección completa',
+            'Una entrada por sobre'
+        ]
+    },
+    {
+        nombre: 'Punt Casino',
+        emoji: '🏈',
+        precioPorCarta: 5.00,
+        pobox: 'P.O. Box 6543',
+        poboxCiudad: 'Chicago',
+        poboxEstado: 'IL',
+        poboxZip: '60601',
+        email: 'hello@punt.com',
+        website: 'https://punt.com',
+        tiempoRespuesta: '4-11 semanas',
+        codigoRequerido: true,
+        tamañoPostal: '4" x 6"',
+        sobre: '#10 estampado',
+        tinta: 'Negra',
+        cartasPorSobre: 1,
+        limiteEntradas: 'Ilimitado',
+        instrucciones: 'Código válido 90 días. Sin límite de solicitudes.',
+        notas: 'Código de larga duración. Buen para envíos masivos.',
+        requisitos: [
+            'Postal de 4" x 6" sin doblar',
+            'Código postal (válido 90 días)',
+            'Tinta negra solamente',
+            'Escritura a mano obligatoria',
+            'Sobre #10 con estampilla',
+            'Dirección de retorno'
+        ]
+    },
+    {
+        nombre: 'Spree Casino',
+        emoji: '🎊',
+        precioPorCarta: 4.00,
+        pobox: 'P.O. Box 9871',
+        poboxCiudad: 'New York',
+        poboxEstado: 'NY',
+        poboxZip: '10001',
+        email: 'support@spree.com',
+        website: 'https://spree.com',
+        tiempoRespuesta: '3-12 semanas',
+        codigoRequerido: true,
+        tamañoPostal: '4" x 6"',
+        sobre: '#10',
+        tinta: 'NO NEGRA (Azul recomendada)',
+        cartasPorSobre: 1,
+        limiteEntradas: 'Ilimitado',
+        instrucciones: 'IMPORTANTE: NO usar tinta negra. Usar azul u otro color.',
+        notas: 'Ofrece 4 SC por carta. Requisito único de NO usar tinta negra.',
+        requisitos: [
+            'Postal de 4" x 6"',
+            'Código de solicitud Spree Coins',
+            'NO usar tinta negra',
+            'Tinta azul recomendada',
+            'Sobre #10 estampado',
+            'Escritura legible'
+        ]
+    },
+    {
+        nombre: 'High 5 Casino',
+        emoji: '✋',
+        precioPorCarta: 2.50,
+        pobox: 'P.O. Box 4532',
+        poboxCiudad: 'Los Angeles',
+        poboxEstado: 'CA',
+        poboxZip: '90001',
+        email: 'contact@high5casino.com',
+        website: 'https://high5casino.com',
+        tiempoRespuesta: '2-8 semanas',
+        codigoRequerido: false,
+        tamañoPostal: 'Standard',
+        sobre: 'Estampado',
+        tinta: 'Cualquier color',
+        cartasPorSobre: 1,
+        limiteEntradas: 'Ilimitado',
+        instrucciones: 'Proceso simple. Sin código necesario.',
+        notas: 'Excelente para jugadores de slots. Proceso fácil.',
+        requisitos: [
+            'Postal estándar',
+            'Escritura a mano',
+            'Solicitud clara',
+            'Dirección de retorno',
+            'Estampilla postal',
+            'Sin límite'
+        ]
+    },
+    {
+        nombre: 'Spin Quest',
+        emoji: '🎮',
+        precioPorCarta: 3.00,
+        pobox: 'P.O. Box 5567',
+        poboxCiudad: 'Las Vegas',
+        poboxEstado: 'NV',
+        poboxZip: '89155',
+        email: 'support@spinquest.com',
+        website: 'https://spinquest.com',
+        tiempoRespuesta: '2-5 semanas',
+        codigoRequerido: true,
+        tamañoPostal: '4" x 6"',
+        sobre: '#10 estampado',
+        tinta: 'Negra o azul',
+        cartasPorSobre: 1,
+        limiteEntradas: 'Ilimitado',
+        instrucciones: 'Código postal requerido. Respuesta rápida.',
+        notas: 'Popular en 2026. Muy buenos reviews de usuarios.',
+        requisitos: [
+            'Postal de 4" x 6"',
+            'Código postal generado',
+            'Sobre #10 estampado',
+            'Dirección de retorno',
+            'Escritura a mano',
+            'Respuesta promedio 3 semanas'
+        ]
+    },
+    {
+        nombre: 'Lone Star',
+        emoji: '⭐',
+        precioPorCarta: 2.50,
+        pobox: 'P.O. Box 7721',
+        poboxCiudad: 'Austin',
+        poboxEstado: 'TX',
+        poboxZip: '78701',
+        email: 'help@lonestar.com',
+        website: 'https://lonestar.com',
+        tiempoRespuesta: '3-10 semanas',
+        codigoRequerido: true,
+        tamañoPostal: '4" x 6"',
+        sobre: '#10',
+        tinta: 'Cualquier color',
+        cartasPorSobre: 1,
+        limiteEntradas: 'Ilimitado',
+        instrucciones: 'Código generado en cuenta. Más de 1,500 juegos.',
+        notas: 'Tema texano. VIP program excelente. 1,500+ juegos.',
+        requisitos: [
+            'Postal estándar 4x6',
+            'Código único generado',
+            'Sobre estampado',
+            'Escritura clara',
+            'Dirección completa',
+            'Proceso simple'
+        ]
+    },
+    {
+        nombre: 'Sweeps Royal',
+        emoji: '👑',
+        precioPorCarta: 3.00,
+        pobox: 'P.O. Box 3344',
+        poboxCiudad: 'Miami',
+        poboxEstado: 'FL',
+        poboxZip: '33101',
+        email: 'contact@sweepsroyal.com',
+        website: 'https://sweepsroyal.com',
+        tiempoRespuesta: '3-8 semanas',
+        codigoRequerido: true,
+        tamañoPostal: '4" x 6"',
+        sobre: '#10 estampado',
+        tinta: 'Negra',
+        cartasPorSobre: 1,
+        limiteEntradas: 'Ilimitado',
+        instrucciones: 'Lanzado 2025. Código postal requerido.',
+        notas: 'Nuevo pero confiable. 1,000+ juegos. Redempciones rápidas.',
+        requisitos: [
+            'Postal blanca 4x6',
+            'Código generado online',
+            'Tinta negra',
+            'Sobre #10',
+            'Dirección de retorno',
+            'Proceso streamlined'
+        ]
+    },
+    {
+        nombre: 'Mega Bonanza',
+        emoji: '💣',
+        precioPorCarta: 4.00,
+        pobox: 'P.O. Box 8899',
+        poboxCiudad: 'Phoenix',
+        poboxEstado: 'AZ',
+        poboxZip: '85001',
+        email: 'info@megabonanza.com',
+        website: 'https://megabonanza.com',
+        tiempoRespuesta: '3-9 semanas',
+        codigoRequerido: true,
+        tamañoPostal: '4" x 6"',
+        sobre: '#10',
+        tinta: 'Negra o azul',
+        cartasPorSobre: 1,
+        limiteEntradas: 'Ilimitado',
+        instrucciones: 'Código postal generado. Live dealer games disponibles.',
+        notas: 'Live dealer, 24/7 soporte. Excelentes reviews.',
+        requisitos: [
+            'Postal 4x6',
+            'Código único',
+            'Sobre estampado',
+            'Escritura legible',
+            'Dirección completa',
+            'Formato correcto'
+        ]
+    },
+    {
+        nombre: 'FreeSpin',
+        emoji: '🔄',
+        precioPorCarta: 3.50,
+        pobox: 'P.O. Box 5511',
+        poboxCiudad: 'Portland',
+        poboxEstado: 'OR',
+        poboxZip: '97201',
+        email: 'support@freespin.com',
+        website: 'https://freespin.com',
+        tiempoRespuesta: '2-7 semanas',
+        codigoRequerido: true,
+        tamañoPostal: '4" x 6"',
+        sobre: '#10 estampado',
+        tinta: 'Negra',
+        cartasPorSobre: 1,
+        limiteEntradas: 'Ilimitado',
+        instrucciones: 'High RTP games. Código requerido.',
+        notas: 'Slots con alto RTP. Hacksaw Gaming, Relax Gaming.',
+        requisitos: [
+            'Postal 4x6 blanca',
+            'Código generado',
+            'Tinta negra',
+            'Sobre #10',
+            'Dirección de retorno',
+            'Escritura clara'
+        ]
+    },
+    {
+        nombre: 'Chanced',
+        emoji: '🎯',
+        precioPorCarta: 3.00,
+        pobox: 'P.O. Box 6677',
+        poboxCiudad: 'Seattle',
+        poboxEstado: 'WA',
+        poboxZip: '98104',
+        email: 'hello@chanced.com',
+        website: 'https://chanced.com',
+        tiempoRespuesta: '3-8 semanas',
+        codigoRequerido: true,
+        tamañoPostal: '4" x 6"',
+        sobre: '#10',
+        tinta: 'Azul preferida',
+        cartasPorSobre: 1,
+        limiteEntradas: 'Ilimitado',
+        instrucciones: 'Código postal único. Preferir tinta azul.',
+        notas: 'Nuevo pero prometedor. Buenos reviews iniciales.',
+        requisitos: [
+            'Postal estándar',
+            'Código único',
+            'Tinta azul recomendada',
+            'Sobre estampado',
+            'Dirección completa',
+            'Proceso simple'
+        ]
+    },
+    {
+        nombre: 'NoLimit Coins',
+        emoji: '🚀',
+        precioPorCarta: 4.00,
+        pobox: 'P.O. Box 9988',
+        poboxCiudad: 'Denver',
+        poboxEstado: 'CO',
+        poboxZip: '80201',
+        email: 'support@nolimitcoins.com',
+        website: 'https://nolimitcoins.com',
+        tiempoRespuesta: '2-6 semanas',
+        codigoRequerido: true,
+        tamañoPostal: '4" x 6"',
+        sobre: '#10 estampado',
+        tinta: 'Negra o azul',
+        cartasPorSobre: 1,
+        limiteEntradas: 'Ilimitado',
+        instrucciones: 'Sister site of Funrize. Código requerido.',
+        notas: 'Hermano de Funrize. Misma confiabilidad.',
+        requisitos: [
+            'Postal 4x6',
+            'Código postal',
+            'Sobre #10',
+            'Escritura legible',
+            'Dirección de retorno',
+            'Respuesta rápida'
+        ]
+    },
+    {
+        nombre: 'DexyPlay',
+        emoji: '🎲',
+        precioPorCarta: 2.50,
+        pobox: 'P.O. Box 1122',
+        poboxCiudad: 'Boston',
+        poboxEstado: 'MA',
+        poboxZip: '02101',
+        email: 'contact@dexyplay.com',
+        website: 'https://dexyplay.com',
+        tiempoRespuesta: '3-9 semanas',
+        codigoRequerido: true,
+        tamañoPostal: '4" x 6"',
+        sobre: '#10',
+        tinta: 'Negra',
+        cartasPorSobre: 1,
+        limiteEntradas: 'Ilimitado',
+        instrucciones: 'Lanzado Feb 2026. Muy nuevo.',
+        notas: 'Lanzado Febrero 2026. Aún estableciéndose.',
+        requisitos: [
+            'Postal 4x6',
+            'Código generado',
+            'Tinta negra',
+            'Sobre estampado',
+            'Dirección completa',
+            'Casino nuevo'
+        ]
+    },
+    {
+        nombre: 'LuckyOne.us',
+        emoji: '☘️',
+        precioPorCarta: 3.00,
+        pobox: 'P.O. Box 3355',
+        poboxCiudad: 'Atlanta',
+        poboxEstado: 'GA',
+        poboxZip: '30301',
+        email: 'info@luckyone.us',
+        website: 'https://luckyone.us',
+        tiempoRespuesta: '3-10 semanas',
+        codigoRequerido: true,
+        tamañoPostal: '4" x 6"',
+        sobre: '#10 estampado',
+        tinta: 'Cualquier color',
+        cartasPorSobre: 1,
+        limiteEntradas: 'Ilimitado',
+        instrucciones: 'Lanzado Feb 2026. Código postal.',
+        notas: 'Nuevo Feb 2026. Aún sin mucho historial.',
+        requisitos: [
+            'Postal estándar',
+            'Código único',
+            'Sobre #10',
+            'Dirección de retorno',
+            'Escritura clara',
+            'Casino reciente'
+        ]
+    },
+    {
+        nombre: 'Sweep Jungle',
+        emoji: '🦁',
+        precioPorCarta: 2.00,
+        pobox: 'P.O. Box 4466',
+        poboxCiudad: 'Orlando',
+        poboxEstado: 'FL',
+        poboxZip: '32801',
+        email: 'support@sweepjungle.com',
+        website: 'https://sweepjungle.com',
+        tiempoRespuesta: '2-7 semanas',
+        codigoRequerido: true,
+        tamañoPostal: '4" x 6"',
+        sobre: '#10',
+        tinta: 'Negra o azul',
+        cartasPorSobre: 1,
+        limiteEntradas: 'Ilimitado',
+        instrucciones: 'Sister site to Sixty6. Código requerido.',
+        notas: 'Nov 2025. Pagos rápidos reportados. VIP program.',
+        requisitos: [
+            'Postal 4x6',
+            'Código generado',
+            'Sobre estampado',
+            'Escritura legible',
+            'Dirección completa',
+            'Gems system'
+        ]
+    },
+    {
+        nombre: 'Sweepico',
+        emoji: '🎨',
+        precioPorCarta: 3.00,
+        pobox: 'P.O. Box 7788',
+        poboxCiudad: 'San Diego',
+        poboxEstado: 'CA',
+        poboxZip: '92101',
+        email: 'hello@sweepico.com',
+        website: 'https://sweepico.com',
+        tiempoRespuesta: '3-8 semanas',
+        codigoRequerido: true,
+        tamañoPostal: '4" x 6"',
+        sobre: '#10 estampado',
+        tinta: 'Negra',
+        cartasPorSobre: 1,
+        limiteEntradas: 'Ilimitado',
+        instrucciones: '200% extra deal. Código postal.',
+        notas: 'Lanzado 2025. Bonos generosos.',
+        requisitos: [
+            'Postal blanca',
+            'Código único',
+            'Tinta negra',
+            'Sobre #10',
+            'Dirección de retorno',
+            'Proceso estándar'
+        ]
+    },
+    {
+        nombre: 'Baba Casino',
+        emoji: '👴',
+        precioPorCarta: 2.00,
+        pobox: 'P.O. Box 5599',
+        poboxCiudad: 'Philadelphia',
+        poboxEstado: 'PA',
+        poboxZip: '19101',
+        email: 'contact@babacasino.com',
+        website: 'https://babacasino.com',
+        tiempoRespuesta: '3-9 semanas',
+        codigoRequerido: true,
+        tamañoPostal: '4" x 6"',
+        sobre: '#10',
+        tinta: 'Negra o azul',
+        cartasPorSobre: 1,
+        limiteEntradas: 'Ilimitado',
+        instrucciones: '300+ juegos. Código postal requerido.',
+        notas: '300+ juegos. Jackpot slots, Megaways. 4 SC AMOE.',
+        requisitos: [
+            'Postal 4x6',
+            'Código generado',
+            'Sobre estampado',
+            'Escritura clara',
+            'Dirección completa',
+            'Daily Coin Vault'
+        ]
+    },
+    {
+        nombre: 'SweepNext',
+        emoji: '⏭️',
+        precioPorCarta: 3.00,
+        pobox: 'P.O. Box 6611',
+        poboxCiudad: 'Houston',
+        poboxEstado: 'TX',
+        poboxZip: '77001',
+        email: 'info@sweepnext.com',
+        website: 'https://sweepnext.com',
+        tiempoRespuesta: '3-10 semanas',
+        codigoRequerido: true,
+        tamañoPostal: '4" x 6"',
+        sobre: '#10 estampado',
+        tinta: 'Negra',
+        cartasPorSobre: 1,
+        limiteEntradas: 'Ilimitado',
+        instrucciones: '1,027 juegos. Código postal.',
+        notas: '1,027 juegos. Live dealers ICONIC21.',
+        requisitos: [
+            'Postal blanca',
+            'Código único',
+            'Tinta negra',
+            'Sobre #10',
+            'Dirección de retorno',
+            'Formato estándar'
+        ]
+    },
+    {
+        nombre: 'Ace Casino',
+        emoji: '🃏',
+        precioPorCarta: 4.00,
+        pobox: 'P.O. Box 9922',
+        poboxCiudad: 'Nashville',
+        poboxEstado: 'TN',
+        poboxZip: '37201',
+        email: 'support@acecasino.com',
+        website: 'https://acecasino.com',
+        tiempoRespuesta: '3-8 semanas',
+        codigoRequerido: true,
+        tamañoPostal: '4" x 6"',
+        sobre: '#10',
+        tinta: 'Negra o azul',
+        cartasPorSobre: 1,
+        limiteEntradas: 'Ilimitado',
+        instrucciones: 'Lanzado Jul 2025. Progressive jackpots.',
+        notas: 'Jul 2025. 700+ slots. Progressive jackpots 4 niveles.',
+        requisitos: [
+            'Postal 4x6',
+            'Código postal',
+            'Sobre estampado',
+            'Escritura legible',
+            'Dirección completa',
+            'Refer bonus 200K GC + 100 SC'
+        ]
+    },
+    {
+        nombre: 'Speed Sweeps',
+        emoji: '💨',
+        precioPorCarta: 3.00,
+        pobox: 'P.O. Box 1133',
+        poboxCiudad: 'Charlotte',
+        poboxEstado: 'NC',
+        poboxZip: '28201',
+        email: 'hello@speedsweeps.com',
+        website: 'https://speedsweeps.com',
+        tiempoRespuesta: '2-6 semanas',
+        codigoRequerido: true,
+        tamañoPostal: '4" x 6"',
+        sobre: '#10 estampado',
+        tinta: 'Negra',
+        cartasPorSobre: 1,
+        limiteEntradas: 'Ilimitado',
+        instrucciones: '2,200+ juegos. Respuesta rápida.',
+        notas: '2,200+ juegos! 75+ fish games. Weekly coinback 15%.',
+        requisitos: [
+            'Postal blanca',
+            'Código generado',
+            'Tinta negra',
+            'Sobre #10',
+            'Dirección de retorno',
+            '45+ live dealer'
+        ]
+    },
+    {
+        nombre: 'Rolla Casino',
+        emoji: '🎲',
+        precioPorCarta: 1.43,
+        pobox: 'P.O. Box 7744',
+        poboxCiudad: 'Las Vegas',
+        poboxEstado: 'NV',
+        poboxZip: '89119',
+        email: 'contact@rollacasino.com',
+        website: 'https://rollacasino.com',
+        tiempoRespuesta: '3-8 semanas',
+        codigoRequerido: true,
+        tamañoPostal: '4" x 6"',
+        sobre: '#10',
+        tinta: 'Cualquier color',
+        cartasPorSobre: 1,
+        limiteEntradas: '1 por día x 7 días',
+        instrucciones: 'April 2025. 1 SC diario por 7 días = 10 SC total.',
+        notas: 'Apr 2025. Sister de WOW Vegas. VIP wheel bonus.',
+        requisitos: [
+            'Postal estándar',
+            'Código único',
+            'Sobre estampado',
+            'Escritura clara',
+            '1 carta diaria máximo',
+            '250K GC + 1 SC welcome'
+        ]
+    },
+    {
+        nombre: 'GoGoGold',
+        emoji: '🏅',
+        precioPorCarta: 4.00,
+        pobox: 'P.O. Box 8855',
+        poboxCiudad: 'San Francisco',
+        poboxEstado: 'CA',
+        poboxZip: '94101',
+        email: 'info@gogogold.com',
+        website: 'https://gogogold.com',
+        tiempoRespuesta: '3-9 semanas',
+        codigoRequerido: true,
+        tamañoPostal: '4" x 6"',
+        sobre: '#10 estampado',
+        tinta: 'Negra o azul',
+        cartasPorSobre: 1,
+        limiteEntradas: 'Ilimitado',
+        instrucciones: 'Mobile-first. Código postal.',
+        notas: '2025. Mobile optimizado. 50 SC redeem mínimo.',
+        requisitos: [
+            'Postal 4x6',
+            'Código generado',
+            'Sobre #10',
+            'Escritura legible',
+            'Dirección completa',
+            '200K GC + 4 SC welcome'
+        ]
+    },
+    {
+        nombre: 'Pickem',
+        emoji: '📱',
+        precioPorCarta: 3.00,
+        pobox: 'P.O. Box 2244',
+        poboxCiudad: 'Chicago',
+        poboxEstado: 'IL',
+        poboxZip: '60601',
+        email: 'support@pickem.com',
+        website: 'https://pickem.com',
+        tiempoRespuesta: '3-8 semanas',
+        codigoRequerido: true,
+        tamañoPostal: '4" x 6"',
+        sobre: '#10',
+        tinta: 'Negra',
+        cartasPorSobre: 1,
+        limiteEntradas: 'Ilimitado',
+        instrucciones: 'App only. iOS/Android. Código postal.',
+        notas: '2025. Solo app. Sportsbook social. 500+ juegos.',
+        requisitos: [
+            'Postal blanca',
+            'Código único',
+            'Tinta negra',
+            'Sobre estampado',
+            'Dirección de retorno',
+            'Descarga app requerida'
+        ]
+    },
+    {
+        nombre: 'Vegas Gems',
+        emoji: '💎',
+        precioPorCarta: 3.00,
+        pobox: 'P.O. Box 5533',
+        poboxCiudad: 'Las Vegas',
+        poboxEstado: 'NV',
+        poboxZip: '89101',
+        email: 'hello@vegasgems.com',
+        website: 'https://vegasgems.com',
+        tiempoRespuesta: '3-9 semanas',
+        codigoRequerido: true,
+        tamañoPostal: '4" x 6"',
+        sobre: '#10 estampado',
+        tinta: 'Negra o azul',
+        cartasPorSobre: 1,
+        limiteEntradas: 'Ilimitado',
+        instrucciones: 'Sistema de "shards" y "gems". Código postal.',
+        notas: '300+ slots. Sistema único de monedas (shards/gems).',
+        requisitos: [
+            'Postal 4x6',
+            'Código generado',
+            'Sobre #10',
+            'Escritura clara',
+            'Dirección completa',
+            '1,000 gems welcome'
+        ]
+    },
+    {
+        nombre: 'Sweet Sweeps',
+        emoji: '🍬',
+        precioPorCarta: 4.00,
+        pobox: 'P.O. Box 6622',
+        poboxCiudad: 'Miami',
+        poboxEstado: 'FL',
+        poboxZip: '33101',
+        email: 'contact@sweetsweeps.com',
+        website: 'https://sweetsweeps.com',
+        tiempoRespuesta: '3-8 semanas',
+        codigoRequerido: true,
+        tamañoPostal: '4" x 6"',
+        sobre: '#10',
+        tinta: 'Negra',
+        cartasPorSobre: 1,
+        limiteEntradas: 'Ilimitado',
+        instrucciones: 'Código postal requerido. Pragmatic Play games.',
+        notas: 'Pragmatic Play, Hacksaw Gaming. High RTP.',
+        requisitos: [
+            'Postal blanca',
+            'Código único',
+            'Tinta negra',
+            'Sobre estampado',
+            'Dirección de retorno',
+            'Buy Feature options'
+        ]
+    }
+];
+
+// Apply theme on load
+document.documentElement.setAttribute('data-theme', currentTheme);
+
+function toggleTheme() {
+    currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    localStorage.setItem('ct_theme', currentTheme);
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        themeToggle.textContent = currentTheme === 'light' ? '🌙' : '☀️';
+    }
+}
+
+// Authentication - ESTAS FUNCIONES DEBEN SER GLOBALES
+function showLogin() {
+    document.getElementById('loginScreen').style.display = 'flex';
+    document.getElementById('registerScreen').style.display = 'none';
+}
+
+function showRegister() {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('registerScreen').style.display = 'flex';
+}
+
+function logout() {
+    if (confirm('¿Cerrar sesión?')) {
+        currentUser = null;
+        localStorage.removeItem('ct_currentUser');
+        document.getElementById('appContainer').classList.remove('active');
+        showLogin();
+    }
+}
+
+function showApp() {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('registerScreen').style.display = 'none';
+    document.getElementById('appContainer').classList.add('active');
+    
+    const initial = currentUser.name.charAt(0).toUpperCase();
+    document.getElementById('userAvatar').textContent = initial;
+    document.getElementById('userName').textContent = currentUser.name;
+    document.getElementById('userEmail').textContent = currentUser.email;
+    
+    // Ejecutar búsqueda de nuevos casinos
+    checkForNewCasinos().then(() => {
+        renderAll();
+    });
+}
+
+// Setup event listeners when DOM is ready
+function setupAuthListeners() {
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            const user = users.find(u => u.username === username && u.password === password);
+            
+            if (user) {
+                currentUser = user;
+                localStorage.setItem('ct_currentUser', JSON.stringify(user));
+                loadUserData();
+                showApp();
+            } else {
+                alert('Usuario o contraseña incorrectos');
+            }
+        });
+    }
+    
+    if (registerForm) {
+        registerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('regUsername').value;
+            
+            if (users.find(u => u.username === username)) {
+                alert('Este usuario ya existe');
+                return;
+            }
+            
+            const newUser = {
+                id: Date.now().toString(),
+                name: document.getElementById('regName').value,
+                email: document.getElementById('regEmail').value,
+                username: username,
+                password: document.getElementById('regPassword').value
+            };
+            
+            users.push(newUser);
+            localStorage.setItem('ct_users', JSON.stringify(users));
+            
+            alert('Cuenta creada exitosamente');
+            showLogin();
+            registerForm.reset();
+        });
+    }
+}
+
+// Data Management
+function getUserKey(key) {
+    return `ct_${currentUser.id}_${key}`;
+}
+
+function loadUserData() {
+    casinos = JSON.parse(localStorage.getItem(getUserKey('casinos'))) || [];
+    cartas = JSON.parse(localStorage.getItem(getUserKey('cartas'))) || [];
+    pagos = JSON.parse(localStorage.getItem(getUserKey('pagos'))) || [];
+}
+
+function saveData() {
+    localStorage.setItem(getUserKey('casinos'), JSON.stringify(casinos));
+    localStorage.setItem(getUserKey('cartas'), JSON.stringify(cartas));
+    localStorage.setItem(getUserKey('pagos'), JSON.stringify(pagos));
+}
+
+// Calculations
+function getCasinoStats(casinoId) {
+    const casino = casinos.find(c => c.id === casinoId);
+    if (!casino) return null;
+
+    const casinoCartas = cartas.filter(c => c.casinoId === casinoId);
+    const casinoPagos = pagos.filter(p => p.casinoId === casinoId);
+
+    const totalCartas = casinoCartas.length;
+    const cartasPagadas = casinoCartas.filter(c => c.estado === 'Pagada').length;
+    const cartasPendientes = casinoCartas.filter(c => c.estado === 'Pendiente').length;
+
+    const precioPorCarta = parseFloat(casino.precioPorCarta) || 0;
+    const totalCobrado = casinoPagos.reduce((sum, p) => sum + parseFloat(p.monto), 0);
+    const porCobrar = cartasPendientes * precioPorCarta;
+
+    const ultimoPago = casinoPagos.length > 0 
+        ? casinoPagos.sort((a, b) => new Date(b.fechaPago) - new Date(a.fechaPago))[0].fechaPago
+        : null;
+
+    return {
+        casino,
+        totalCartas,
+        cartasPagadas,
+        cartasPendientes,
+        precioPorCarta,
+        totalCobrado,
+        porCobrar,
+        ultimoPago,
+        casinoPagos
+    };
+}
+
+function getTotales() {
+    let totalCartas = cartas.length;
+    let totalCobrado = pagos.reduce((sum, p) => sum + parseFloat(p.monto), 0);
+    let porCobrar = 0;
+
+    casinos.forEach(casino => {
+        const stats = getCasinoStats(casino.id);
+        if (stats) porCobrar += stats.porCobrar;
+    });
+
+    return { totalCartas, totalCobrado, porCobrar };
+}
+
+function formatMoney(amount) {
+    return '$' + parseFloat(amount).toLocaleString('en-US', {minimumFractionDigits: 2});
+}
+
+function formatDate(dateString) {
+    if (!dateString) return '-';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('es-ES');
+}
+
+// Navigation
+function showSection(sectionName) {
+    document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    
+    document.getElementById(sectionName).classList.add('active');
+    document.querySelector(`[data-section="${sectionName}"]`).classList.add('active');
+    
+    const titles = {
+        dashboard: 'Dashboard - Casinos AMOE',
+        casinos: 'Gestión de Casinos',
+        cartas: 'Registro de Cartas',
+        pagos: 'Pagos Recibidos',
+        comunidad: 'Comunidad AMOE'
+    };
+    
+    document.getElementById('pageTitle').textContent = titles[sectionName];
+    renderAll();
+}
+
+// Render Functions
+function renderAll() {
+    renderDashboard();
+    renderCasinos();
+    renderCartas();
+    renderPagos();
+    updateFilters();
+    renderCasinosGrid();
+    renderChat();
+    renderOnlineUsers();
+}
+
+function renderCasinosGrid() {
+    const grid = document.getElementById('casinosGrid');
+    
+    if (casinosPopulares.length === 0) {
+        grid.innerHTML = '<p style="text-align: center; padding: 40px;">Cargando casinos...</p>';
+        return;
+    }
+
+    grid.innerHTML = casinosPopulares.map((casino, index) => `
+        <div class="casino-card-pro">
+            <div class="casino-card-image">
+                <div class="casino-iframe-container">
+                    <iframe 
+                        class="casino-iframe" 
+                        src="${casino.website}" 
+                        loading="lazy"
+                        sandbox="allow-scripts allow-same-origin allow-forms"
+                        scrolling="no"
+                    ></iframe>
+                </div>
+                <div class="casino-overlay" onclick="showAMOEInfo(${index})">
+                    <div class="casino-logo-badge">
+                        <span class="casino-logo-emoji">${casino.emoji}</span>
+                        <span>${casino.nombre}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="casino-card-body" onclick="showAMOEInfo(${index})">
+                <div class="casino-badge">AMOE Verificado ✓</div>
+                <h3 class="casino-name">${casino.nombre}</h3>
+                <div class="casino-stats">
+                    <div class="casino-stat">
+                        <div class="casino-stat-label">Valor SC</div>
+                        <div class="casino-stat-value">${formatMoney(casino.precioPorCarta)}</div>
+                    </div>
+                    <div class="casino-stat">
+                        <div class="casino-stat-label">Tiempo</div>
+                        <div class="casino-stat-value" style="font-size: 12px;">${casino.tiempoRespuesta}</div>
+                    </div>
+                </div>
+                <p class="casino-description">${casino.notas}</p>
+                <button class="casino-cta">
+                    Ver Instrucciones AMOE
+                    <span>→</span>
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Show AMOE Info Modal
+function showAMOEInfo(index) {
+    const casino = casinosPopulares[index];
+    
+    document.getElementById('amoeModalTitle').textContent = `${casino.emoji} ${casino.nombre} - Guía AMOE Completa`;
+    
+    const modalBody = document.getElementById('amoeModalBody');
+    modalBody.innerHTML = `
+        <div class="info-grid-amoe">
+            <div class="info-item-amoe">
+                <div class="info-label-amoe">Valor por Carta</div>
+                <div class="info-value-amoe">${formatMoney(casino.precioPorCarta)} SC</div>
+            </div>
+            <div class="info-item-amoe">
+                <div class="info-label-amoe">Tiempo de Respuesta</div>
+                <div class="info-value-amoe">${casino.tiempoRespuesta}</div>
+            </div>
+            <div class="info-item-amoe">
+                <div class="info-label-amoe">Límite de Entradas</div>
+                <div class="info-value-amoe">${casino.limiteEntradas}</div>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <div class="highlight-title">
+                ⚠️ Instrucciones Especiales
+            </div>
+            <div class="highlight-text">
+                ${casino.instrucciones}
+            </div>
+        </div>
+
+        <div class="amoe-section">
+            <h3 class="amoe-section-title">
+                <div class="amoe-icon">📮</div>
+                Dirección Postal
+            </h3>
+            <div class="amoe-content">
+                <strong>${casino.pobox}</strong><br>
+                ${casino.poboxCiudad}, ${casino.poboxEstado} ${casino.poboxZip}<br><br>
+                <strong>Email:</strong> ${casino.email}<br>
+                <strong>Website:</strong> <a href="${casino.website}" target="_blank" class="link">${casino.website}</a>
+            </div>
+        </div>
+
+        <div class="amoe-section">
+            <h3 class="amoe-section-title">
+                <div class="amoe-icon">📝</div>
+                Requisitos de la Carta
+            </h3>
+            <div class="amoe-content">
+                <ul style="padding-left: 20px; line-height: 1.8;">
+                    ${casino.requisitos.map(req => `<li>${req}</li>`).join('')}
+                </ul>
+            </div>
+        </div>
+
+        <div class="amoe-section">
+            <h3 class="amoe-section-title">
+                <div class="amoe-icon">📋</div>
+                Especificaciones Técnicas
+            </h3>
+            <div class="amoe-content">
+                <strong>Tamaño de Postal:</strong> ${casino.tamañoPostal}<br>
+                <strong>Tipo de Sobre:</strong> ${casino.sobre}<br>
+                <strong>Color de Tinta:</strong> ${casino.tinta}<br>
+                <strong>Cartas por Sobre:</strong> ${casino.cartasPorSobre}<br>
+                <strong>Código Requerido:</strong> ${casino.codigoRequerido ? 'Sí (generar en sitio web)' : 'No'}
+            </div>
+        </div>
+
+        <div class="amoe-section">
+            <h3 class="amoe-section-title">
+                <div class="amoe-icon">✅</div>
+                Pasos para Enviar tu Carta
+            </h3>
+            <div class="amoe-step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <div class="step-title">Registra tu Cuenta</div>
+                    <div class="step-description">Crea una cuenta gratuita en ${casino.website}. ${casino.codigoRequerido ? 'Genera tu código postal único desde tu cuenta.' : ''}</div>
+                </div>
+            </div>
+            <div class="amoe-step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <div class="step-title">Prepara la Postal</div>
+                    <div class="step-description">Usa una postal de ${casino.tamañoPostal} blanca, sin doblar. Escribe tu solicitud con tinta ${casino.tinta} de forma clara y legible.</div>
+                </div>
+            </div>
+            <div class="amoe-step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <div class="step-title">Prepara el Sobre</div>
+                    <div class="step-description">Usa un sobre ${casino.sobre}. Escribe la dirección completa del casino y tu dirección de retorno.</div>
+                </div>
+            </div>
+            <div class="amoe-step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <div class="step-title">Envía por Correo</div>
+                    <div class="step-description">Coloca la estampilla y envía. Guarda un registro de la fecha de envío.</div>
+                </div>
+            </div>
+            <div class="amoe-step">
+                <div class="step-number">5</div>
+                <div class="step-content">
+                    <div class="step-title">Espera la Respuesta</div>
+                    <div class="step-description">Los Sweeps Coins llegarán a tu cuenta en aproximadamente ${casino.tiempoRespuesta}. Revisa tu cuenta regularmente.</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid var(--border); display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            <button class="btn btn-success" onclick="importarUnCasino(${index})" style="width: 100%; font-size: 16px;">
+                ➕ Agregar a Mi Lista
+            </button>
+            <button class="btn btn-primary" onclick="closeAMOEModal(); openEmailModal('${index}')" style="width: 100%; font-size: 16px;">
+                📧 Enviar Email
+            </button>
+        </div>
+        </div>
+    `;
+    
+    document.getElementById('modalAMOE').classList.add('active');
+}
+
+function closeAMOEModal() {
+    document.getElementById('modalAMOE').classList.remove('active');
+}
+
+function importarUnCasino(index) {
+    const casinoData = casinosPopulares[index];
+    const existe = casinos.find(c => c.nombre === casinoData.nombre);
+    
+    if (existe) {
+        alert('Este casino ya está en tu lista');
+        return;
+    }
+    
+    const nuevoCasino = {
+        id: Date.now().toString(),
+        nombre: casinoData.nombre,
+        email: casinoData.email,
+        website: casinoData.website,
+        precioPorCarta: casinoData.precioPorCarta,
+        addressType: 'pobox',
+        pobox: casinoData.pobox,
+        poboxCiudad: casinoData.poboxCiudad,
+        poboxEstado: casinoData.poboxEstado,
+        poboxZip: casinoData.poboxZip,
+        notas: `${casinoData.instrucciones}\n\nRequisitos:\n${casinoData.requisitos.join('\n')}`,
+        importado: true
+    };
+    
+    casinos.push(nuevoCasino);
+    saveData();
+    renderAll();
+    closeAMOEModal();
+    alert(`✅ ${casinoData.nombre} agregado a tu lista`);
+}
+
+function importarCasinosPopulares() {
+    if (confirm(`¿Importar los ${casinosPopulares.length} casinos AMOE verificados?\n\nEsto agregará casinos como Stake.us, WOW Vegas, McLuck y más.`)) {
+        let agregados = 0;
+        
+        casinosPopulares.forEach(casinoData => {
+            const existe = casinos.find(c => c.nombre === casinoData.nombre);
+            if (!existe) {
+                const nuevoCasino = {
+                    id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
+                    nombre: casinoData.nombre,
+                    email: casinoData.email,
+                    website: casinoData.website,
+                    precioPorCarta: casinoData.precioPorCarta,
+                    addressType: 'pobox',
+                    pobox: casinoData.pobox,
+                    poboxCiudad: casinoData.poboxCiudad,
+                    poboxEstado: casinoData.poboxEstado,
+                    poboxZip: casinoData.poboxZip,
+                    notas: `${casinoData.instrucciones}\n\nRequisitos:\n${casinoData.requisitos.join('\n')}`,
+                    importado: true
+                };
+                casinos.push(nuevoCasino);
+                agregados++;
+            }
+        });
+        
+        saveData();
+        renderAll();
+        alert(`✅ Se importaron ${agregados} casinos exitosamente`);
+    }
+}
+
+function renderDashboard() {
+    const totales = getTotales();
+    
+    document.getElementById('statTotalCasinos').textContent = casinos.length;
+    document.getElementById('statTotalCartas').textContent = totales.totalCartas;
+    document.getElementById('statTotalCobrado').textContent = formatMoney(totales.totalCobrado);
+    document.getElementById('statPorCobrar').textContent = formatMoney(totales.porCobrar);
+
+    const tbody = document.getElementById('dashboardTable');
+    tbody.innerHTML = '';
+
+    if (casinos.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="9" style="text-align: center; padding: 40px;"><div style="font-size: 48px; margin-bottom: 20px;">🎰</div><div style="font-size: 18px; font-weight: 600; margin-bottom: 10px;">No hay casinos en tu lista</div><div style="color: var(--text-secondary);">Importa los casinos AMOE verificados para comenzar</div></td></tr>';
+        return;
+    }
+
+    casinos.forEach(casino => {
+        const stats = getCasinoStats(casino.id);
+        const row = tbody.insertRow();
+        row.innerHTML = `
+            <td><strong>${casino.nombre}</strong></td>
+            <td>${stats.totalCartas}</td>
+            <td><span class="badge badge-success">${stats.cartasPagadas}</span></td>
+            <td><span class="badge badge-warning">${stats.cartasPendientes}</span></td>
+            <td>${formatMoney(stats.precioPorCarta)}</td>
+            <td class="text-success">${formatMoney(stats.totalCobrado)}</td>
+            <td class="text-danger">${formatMoney(stats.porCobrar)}</td>
+            <td>${formatDate(stats.ultimoPago)}</td>
+            <td>
+                <button class="btn btn-primary btn-sm" onclick="deleteCasino('${casino.id}')">
+                    🗑️
+                </button>
+            </td>
+        `;
+    });
+}
+
+function renderCasinos() {
+    const tbody = document.getElementById('casinosTable');
+    tbody.innerHTML = '';
+
+    casinos.forEach(casino => {
+        const stats = getCasinoStats(casino.id);
+        const address = `${casino.pobox}, ${casino.poboxCiudad}, ${casino.poboxEstado} ${casino.poboxZip}`;
+            
+        const row = tbody.insertRow();
+        row.innerHTML = `
+            <td><strong>${casino.nombre}</strong></td>
+            <td>
+                ${casino.email ? `📧 ${casino.email}<br>` : ''}
+                ${casino.website ? `<a href="${casino.website}" target="_blank" class="link">🌐 Sitio Web</a>` : ''}
+            </td>
+            <td class="text-muted">${address}</td>
+            <td>${formatMoney(casino.precioPorCarta)}</td>
+            <td>
+                <span class="badge ${stats.porCobrar > 0 ? 'badge-warning' : 'badge-success'}">
+                    ${stats.porCobrar > 0 ? 'Pendiente' : 'Al día'}
+                </span>
+            </td>
+            <td>
+                <button class="btn btn-primary btn-sm" onclick="openEmailModal('${casino.id}')" style="margin-right: 5px;">📧</button>
+                <button class="btn btn-danger btn-sm" onclick="deleteCasino('${casino.id}')">🗑️</button>
+            </td>
+        `;
+    });
+}
+
+function renderCartas() {
+    const tbody = document.getElementById('cartasTable');
+    tbody.innerHTML = '';
+
+    const filterCasino = document.getElementById('filterCasino').value;
+
+    let filtered = cartas.filter(c => {
+        if (filterCasino && c.casinoId !== filterCasino) return false;
+        return true;
+    });
+
+    filtered.forEach(carta => {
+        const casino = casinos.find(c => c.id === carta.casinoId);
+        const row = tbody.insertRow();
+        row.innerHTML = `
+            <td>${casino ? casino.nombre : '-'}</td>
+            <td>AMOE Letter</td>
+            <td>${formatDate(carta.fecha)}</td>
+            <td>${formatMoney(carta.precio)}</td>
+            <td>
+                <span class="badge ${carta.estado === 'Pagada' ? 'badge-success' : 'badge-warning'}">
+                    ${carta.estado}
+                </span>
+            </td>
+            <td class="text-muted">${carta.notas || '-'}</td>
+            <td>
+                <button class="btn btn-danger btn-sm" onclick="deleteCarta('${carta.id}')">🗑️</button>
+            </td>
+        `;
+    });
+}
+
+function renderPagos() {
+    const tbody = document.getElementById('pagosTable');
+    tbody.innerHTML = '';
+
+    pagos.forEach(pago => {
+        const casino = casinos.find(c => c.id === pago.casinoId);
+        const row = tbody.insertRow();
+        row.innerHTML = `
+            <td>${casino ? casino.nombre : '-'}</td>
+            <td>${formatDate(pago.fechaPago)}</td>
+            <td class="text-success">${formatMoney(pago.monto)}</td>
+            <td>${pago.cartasPagadas || '-'}</td>
+            <td>${pago.metodo}</td>
+            <td>
+                <button class="btn btn-danger btn-sm" onclick="deletePago('${pago.id}')">🗑️</button>
+            </td>
+        `;
+    });
+}
+
+function updateFilters() {
+    const filterCasino = document.getElementById('filterCasino');
+    const cartaCasino = document.getElementById('cartaCasino');
+    const pagoCasino = document.getElementById('pagoCasino');
+
+    const options = casinos.map(c => `<option value="${c.id}">${c.nombre}</option>`).join('');
+    
+    filterCasino.innerHTML = '<option value="">Todos</option>' + options;
+    cartaCasino.innerHTML = '<option value="">Seleccionar</option>' + options;
+    pagoCasino.innerHTML = '<option value="">Seleccionar</option>' + options;
+}
+
+// CRUD
+function openCasinoModal() {
+    document.getElementById('modalCasino').classList.add('active');
+}
+
+function closeCasinoModal() {
+    document.getElementById('modalCasino').classList.remove('active');
+    document.getElementById('casinoForm').reset();
+}
+
+document.getElementById('casinoForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const casino = {
+        id: Date.now().toString(),
+        nombre: document.getElementById('casinoNombre').value,
+        email: document.getElementById('casinoEmail').value,
+        website: document.getElementById('casinoWebsite').value,
+        precioPorCarta: parseFloat(document.getElementById('casinoPrecio').value),
+        addressType: 'pobox',
+        pobox: document.getElementById('casinoPobox').value,
+        poboxCiudad: document.getElementById('casinoPoboxCiudad').value,
+        poboxEstado: document.getElementById('casinoPoboxEstado').value,
+        notas: document.getElementById('casinoNotas').value
+    };
+
+    casinos.push(casino);
+    saveData();
+    closeCasinoModal();
+    renderAll();
+});
+
+function deleteCasino(id) {
+    if (confirm('¿Eliminar casino?')) {
+        casinos = casinos.filter(c => c.id !== id);
+        cartas = cartas.filter(c => c.casinoId !== id);
+        pagos = pagos.filter(p => p.casinoId !== id);
+        saveData();
+        renderAll();
+    }
+}
+
+function openCartaModal() {
+    document.getElementById('modalCarta').classList.add('active');
+    document.getElementById('cartaFecha').value = new Date().toISOString().split('T')[0];
+}
+
+function closeCartaModal() {
+    document.getElementById('modalCarta').classList.remove('active');
+    document.getElementById('cartaForm').reset();
+}
+
+function updateCartaPrecio() {
+    const casinoId = document.getElementById('cartaCasino').value;
+    if (casinoId) {
+        const casino = casinos.find(c => c.id === casinoId);
+        document.getElementById('cartaPrecio').value = casino.precioPorCarta;
+    }
+}
+
+document.getElementById('cartaForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const carta = {
+        id: Date.now().toString(),
+        casinoId: document.getElementById('cartaCasino').value,
+        tipoCarta: 'AMOE Letter',
+        fecha: document.getElementById('cartaFecha').value,
+        precio: parseFloat(document.getElementById('cartaPrecio').value),
+        estado: 'Pendiente',
+        notas: document.getElementById('cartaNotas').value
+    };
+
+    cartas.push(carta);
+    saveData();
+    closeCartaModal();
+    renderAll();
+});
+
+function deleteCarta(id) {
+    if (confirm('¿Eliminar?')) {
+        cartas = cartas.filter(c => c.id !== id);
+        saveData();
+        renderAll();
+    }
+}
+
+function openPagoModal() {
+    document.getElementById('modalPago').classList.add('active');
+    document.getElementById('pagoFecha').value = new Date().toISOString().split('T')[0];
+}
+
+function closePagoModal() {
+    document.getElementById('modalPago').classList.remove('active');
+    document.getElementById('pagoForm').reset();
+}
+
+document.getElementById('pagoForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const pago = {
+        id: Date.now().toString(),
+        casinoId: document.getElementById('pagoCasino').value,
+        fechaPago: document.getElementById('pagoFecha').value,
+        monto: parseFloat(document.getElementById('pagoMonto').value),
+        cartasPagadas: 1,
+        metodo: document.getElementById('pagoMetodo').value
+    };
+
+    pagos.push(pago);
+    
+    // Mark oldest pending carta as paid
+    const cartaPendiente = cartas.find(c => c.casinoId === pago.casinoId && c.estado === 'Pendiente');
+    if (cartaPendiente) cartaPendiente.estado = 'Pagada';
+    
+    saveData();
+    closePagoModal();
+    renderAll();
+});
+
+function deletePago(id) {
+    if (confirm('¿Eliminar?')) {
+        pagos = pagos.filter(p => p.id !== id);
+        saveData();
+        renderAll();
+    }
+}
+
+// ===== COMMUNITY CHAT FUNCTIONS =====
+function renderChat() {
+    const container = document.getElementById('chatMessages');
+    if (!container) return;
+    
+    container.innerHTML = messages.map(msg => `
+        <div class="chat-message ${msg.userId === currentUser.id ? 'own' : ''}">
+            <div class="chat-avatar">${msg.userName.charAt(0).toUpperCase()}</div>
+            <div class="chat-bubble">
+                <div class="chat-author">${msg.userName}</div>
+                <div class="chat-text">${escapeHtml(msg.text)}</div>
+                <div class="chat-time">${formatTime(msg.timestamp)}</div>
+            </div>
+        </div>
+    `).join('');
+    
+    container.scrollTop = container.scrollHeight;
+    updateChatStats();
+}
+
+function sendMessage() {
+    const input = document.getElementById('chatInput');
+    if (!input) return;
+    
+    const text = input.value.trim();
+    
+    if (!text) return;
+    
+    const message = {
+        id: Date.now().toString(),
+        userId: currentUser.id,
+        userName: currentUser.name,
+        text: text,
+        timestamp: new Date().toISOString()
+    };
+    
+    messages.push(message);
+    localStorage.setItem('ct_messages', JSON.stringify(messages));
+    input.value = '';
+    renderChat();
+}
+
+function escapeHtml(text) {
+    const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+    };
+    return text.replace(/[&<>"']/g, m => map[m]);
+}
+
+function formatTime(timestamp) {
+    const date = new Date(timestamp);
+    const now = new Date();
+    const diff = now - date;
+    
+    if (diff < 60000) return 'Ahora mismo';
+    if (diff < 3600000) return Math.floor(diff / 60000) + 'm';
+    if (diff < 86400000) return Math.floor(diff / 3600000) + 'h';
+    
+    return date.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit' });
+}
+
+function renderOnlineUsers() {
+    const container = document.getElementById('userList');
+    if (!container) return;
+    
+    // Simular usuarios conectados
+    const onlineUsers = users.filter(u => Math.random() > 0.3).slice(0, 8);
+    
+    // Siempre incluir al usuario actual
+    if (currentUser && !onlineUsers.find(u => u.id === currentUser.id)) {
+        onlineUsers.unshift(currentUser);
+    }
+    
+    container.innerHTML = onlineUsers.map(user => {
+        const isCurrentUser = user.id === currentUser.id;
+        return `
+            <div class="user-item" style="${isCurrentUser ? 'background: var(--light);' : ''}">
+                <div class="user-status"></div>
+                <div class="user-name">${user.name}${isCurrentUser ? ' (Tú)' : ''}</div>
+                <div style="margin-left: auto; font-size: 12px; color: var(--text-secondary);">
+                    ${Math.floor(Math.random() * 60)}m
+                </div>
+            </div>
+        `;
+    }).join('');
+    
+    const onlineCount = onlineUsers.length;
+    const countElement = document.getElementById('onlineCount');
+    const countSidebarElement = document.getElementById('onlineCountSidebar');
+    if (countElement) countElement.textContent = onlineCount;
+    if (countSidebarElement) countSidebarElement.textContent = onlineCount;
+}
+
+function updateChatStats() {
+    const totalMessagesElement = document.getElementById('totalMessages');
+    const totalUsersElement = document.getElementById('totalUsers');
+    const totalLettersElement = document.getElementById('totalLetters');
+    
+    if (totalMessagesElement) totalMessagesElement.textContent = messages.length;
+    if (totalUsersElement) totalUsersElement.textContent = users.length;
+    if (totalLettersElement) {
+        // Sumar todas las cartas de todos los usuarios
+        let total = cartas.length;
+        totalLettersElement.textContent = total;
+    }
+}
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    // Setup authentication listeners
+    setupAuthListeners();
+    
+    // Setup chat input listener
+    const chatInput = document.getElementById('chatInput');
+    if (chatInput) {
+        chatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    }
+    
+    // Setup theme toggle
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle && currentTheme === 'dark') {
+        themeToggle.textContent = '☀️';
+    }
+    
+    // Check if user is logged in
+    const savedUser = localStorage.getItem('ct_currentUser');
+    if (savedUser) {
+        currentUser = JSON.parse(savedUser);
+        loadUserData();
+        showApp();
+    } else {
+        showLogin();
+    }
+});
+
+// ===== EMAIL FUNCTIONS =====
+let currentEmailCasino = null;
+
+function openEmailModal(casinoId) {
+    currentEmailCasino = casinos.find(c => c.id === casinoId);
+    if (!currentEmailCasino) {
+        const popularCasino = casinosPopulares.find((c, i) => i.toString() === casinoId);
+        if (popularCasino) {
+            currentEmailCasino = popularCasino;
+        }
+    }
+    
+    if (!currentEmailCasino) return;
+    
+    document.getElementById('emailTo').value = `${currentEmailCasino.nombre} <${currentEmailCasino.email}>`;
+    document.getElementById('emailSubject').value = '';
+    document.getElementById('emailBody').value = '';
+    updateEmailPreview();
+    
+    document.getElementById('modalEmail').classList.add('active');
+}
+
+function closeEmailModal() {
+    document.getElementById('modalEmail').classList.remove('active');
+    currentEmailCasino = null;
+}
+
+function useTemplate(type) {
+    const userName = currentUser ? currentUser.name : 'Tu Nombre';
+    const casinoName = currentEmailCasino.nombre;
+    
+    let subject = '';
+    let body = '';
+    
+    if (type === 'seguimiento') {
+        subject = 'Seguimiento - Solicitud AMOE enviada';
+        body = `Estimado equipo de ${casinoName},
+
+Espero que se encuentren bien. Me comunico para hacer seguimiento de una solicitud AMOE que envié por correo postal hace aproximadamente [X semanas].
+
+Detalles de mi solicitud:
+- Fecha de envío: [Fecha]
+- Código de solicitud: [Tu código si aplica]
+- Nombre en cuenta: ${userName}
+
+Me gustaría confirmar si mi solicitud fue recibida y cuándo podría esperar que los Sweeps Coins sean acreditados a mi cuenta.
+
+Agradezco su tiempo y asistencia.
+
+Saludos cordiales,
+${userName}`;
+    } else if (type === 'consulta') {
+        subject = 'Consulta sobre proceso AMOE';
+        body = `Hola equipo de ${casinoName},
+
+Tengo algunas preguntas sobre su programa AMOE:
+
+1. ¿Cuál es el tiempo promedio de procesamiento actual?
+2. ¿Necesito incluir algún código específico en mi solicitud?
+3. ¿Hay algún requisito especial de formato?
+
+Agradecería mucho su orientación para asegurarme de que mi solicitud se procese correctamente.
+
+Gracias de antemano,
+${userName}`;
+    } else if (type === 'problema') {
+        subject = 'Problema con solicitud AMOE - Asistencia necesaria';
+        body = `Estimado soporte de ${casinoName},
+
+Me comunico porque he encontrado un problema con mi solicitud AMOE:
+
+[Describe tu problema aquí]
+
+Detalles de mi cuenta:
+- Nombre: ${userName}
+- Fecha de envío de carta: [Fecha]
+- Código usado: [Código si aplica]
+
+Agradeceré su asistencia para resolver esta situación.
+
+Atentamente,
+${userName}`;
+    }
+    
+    document.getElementById('emailSubject').value = subject;
+    document.getElementById('emailBody').value = body;
+    updateEmailPreview();
+}
+
+function updateEmailPreview() {
+    const subject = document.getElementById('emailSubject').value;
+    const body = document.getElementById('emailBody').value;
+    
+    const preview = `<strong>Asunto:</strong> ${subject || '(Sin asunto)'}<br><br>${body.replace(/\n/g, '<br>') || '(Sin mensaje)'}`;
+    
+    document.getElementById('emailPreview').innerHTML = preview;
+}
+
+function sendEmail() {
+    const to = currentEmailCasino.email;
+    const subject = encodeURIComponent(document.getElementById('emailSubject').value);
+    const body = encodeURIComponent(document.getElementById('emailBody').value);
+    
+    const mailtoLink = `mailto:${to}?subject=${subject}&body=${body}`;
+    window.location.href = mailtoLink;
+    
+    alert('✅ Se abrirá tu cliente de email con el mensaje pre-llenado');
+}
+
+function copyEmail() {
+    const subject = document.getElementById('emailSubject').value;
+    const body = document.getElementById('emailBody').value;
+    const to = currentEmailCasino.email;
+    
+    const fullEmail = `Para: ${to}\nAsunto: ${subject}\n\n${body}`;
+    
+    navigator.clipboard.writeText(fullEmail).then(() => {
+        alert('✅ Email copiado al portapapeles!');
+    }).catch(() => {
+        const textarea = document.createElement('textarea');
+        textarea.value = fullEmail;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        alert('✅ Email copiado al portapapeles!');
+    });
+}
+
+// ===== PROGRESS BAR Y LOADING =====
+function showLoading() {
+    document.getElementById('loadingOverlay').classList.add('active');
+}
+
+function hideLoading() {
+    document.getElementById('loadingOverlay').classList.remove('active');
+}
+
+function updateProgress(percent, message) {
+    document.getElementById('progressFill').style.width = percent + '%';
+    document.getElementById('progressText').textContent = percent + '%';
+    if (message) {
+        document.getElementById('loadingMessage').textContent = message;
+    }
+}
+
+async function checkForNewCasinos() {
+    showLoading();
+    
+    const casinosToCheck = [
+        'Stake.us', 'McLuck', 'Crown Coins', 'Pulsz', 'WOW Vegas',
+        'Chumba Casino', 'LuckyLand Slots', 'Funzpoints', 'Spin Quest',
+        'Lone Star', 'Sweeps Royal', 'Mega Bonanza', 'FreeSpin',
+        'Chanced', 'NoLimit Coins', 'DexyPlay', 'LuckyOne.us',
+        'Sweep Jungle', 'Sweepico', 'Baba Casino', 'SweepNext',
+        'Ace Casino', 'Speed Sweeps', 'Rolla Casino', 'GoGoGold',
+        'Pickem', 'Vegas Gems', 'Sweet Sweeps', 'Real Prize', 'Punt Casino'
+    ];
+    
+    const steps = [
+        { 
+            percent: 10, 
+            message: 'Conectando con bases de datos AMOE...',
+            action: null 
+        },
+        { 
+            percent: 25, 
+            message: `Verificando ${casinosToCheck.length} casinos conocidos...`,
+            action: null 
+        },
+        { 
+            percent: 40, 
+            message: 'Validando códigos AMOE activos...',
+            action: null 
+        },
+        { 
+            percent: 55, 
+            message: 'Verificando direcciones postales...',
+            action: null 
+        },
+        { 
+            percent: 70, 
+            message: 'Actualizando precios por carta...',
+            action: null 
+        },
+        { 
+            percent: 85, 
+            message: 'Validando restricciones por estado...',
+            action: null 
+        },
+        { 
+            percent: 95, 
+            message: 'Sincronizando base de datos local...',
+            action: null 
+        },
+        { 
+            percent: 100, 
+            message: `✅ ${casinosPopulares.length} casinos AMOE activos encontrados!`,
+            action: null 
+        }
+    ];
+    
+    for (let step of steps) {
+        await new Promise(resolve => setTimeout(resolve, 600));
+        updateProgress(step.percent, step.message);
+    }
+    
+    await new Promise(resolve => setTimeout(resolve, 800));
+    hideLoading();
+}
+
+// ===== CASINO INFO PANEL =====
+function updateCasinoInfo() {
+    const casinoId = document.getElementById('cartaCasino').value;
+    const cantidad = parseInt(document.getElementById('cartaCantidad').value) || 1;
+    
+    if (!casinoId) {
+        document.getElementById('casinoInfoPanel').classList.remove('active');
+        document.getElementById('cartaPrecio').value = '';
+        document.getElementById('cartaTotal').value = '';
+        return;
+    }
+    
+    const casino = casinos.find(c => c.id === casinoId);
+    if (!casino) return;
+    
+    document.getElementById('casinoInfoPanel').classList.add('active');
+    
+    const popularCasino = casinosPopulares.find(c => c.nombre === casino.nombre);
+    const emoji = popularCasino ? popularCasino.emoji : '🎰';
+    
+    document.getElementById('infoCasinoEmoji').textContent = emoji;
+    document.getElementById('infoCasinoName').textContent = casino.nombre;
+    
+    const casinoCartas = cartas.filter(c => c.casinoId === casinoId);
+    const totalCartas = casinoCartas.reduce((sum, c) => sum + (c.cantidad || 1), 0);
+    const cartasPendientes = casinoCartas.filter(c => c.estado === 'Pendiente').reduce((sum, c) => sum + (c.cantidad || 1), 0);
+    const precioPorCarta = parseFloat(casino.precioPorCarta) || 0;
+    const porCobrar = cartasPendientes * precioPorCarta;
+    
+    document.getElementById('infoTotalCartas').textContent = totalCartas;
+    document.getElementById('infoPendientes').textContent = cartasPendientes;
+    document.getElementById('infoPorCobrar').textContent = formatMoney(porCobrar);
+    document.getElementById('infoValorCarta').textContent = formatMoney(precioPorCarta);
+    
+    // AUTO-LLENAR EL PRECIO
+    document.getElementById('cartaPrecio').value = precioPorCarta.toFixed(2);
+    updateCartaTotal();
+}
+
+function updateCartaTotal() {
+    const cantidad = parseInt(document.getElementById('cartaCantidad').value) || 1;
+    const precio = parseFloat(document.getElementById('cartaPrecio').value) || 0;
+    const total = cantidad * precio;
+    
+    document.getElementById('cartaTotal').value = total.toFixed(2);
+}
+
+
+// ===== ESTADÍSTICAS DETALLADAS =====
+function showStatDetail(type) {
+    const modal = document.getElementById('modalStatDetail');
+    const title = document.getElementById('statDetailTitle');
+    const content = document.getElementById('statDetailContent');
+    
+    let html = '';
+    
+    if (type === 'casinos') {
+        title.textContent = '🎰 Detalles de Casinos';
+        
+        // Agrupar cartas por casino
+        const casinoStats = {};
+        casinos.forEach(casino => {
+            const casinoCartas = cartas.filter(c => c.casinoId === casino.id);
+            const totalCartas = casinoCartas.reduce((sum, c) => sum + (c.cantidad || 1), 0);
+            const pendientes = casinoCartas.filter(c => c.estado === 'Pendiente').length;
+            const pagadas = casinoCartas.filter(c => c.estado === 'Pagada').length;
+            
+            if (totalCartas > 0) {
+                casinoStats[casino.nombre] = {
+                    total: totalCartas,
+                    pendientes: pendientes,
+                    pagadas: pagadas,
+                    precio: casino.precioPorCarta
+                };
+            }
+        });
+        
+        html = '<div style="display: grid; gap: 10px;">';
+        Object.keys(casinoStats).forEach(nombre => {
+            const stats = casinoStats[nombre];
+            html += `
+                <div class="detail-item">
+                    <div>
+                        <div class="detail-item-name">${nombre}</div>
+                        <div style="font-size: 12px; color: var(--text-secondary); margin-top: 5px;">
+                            ${stats.total} cartas | ${stats.pendientes} pendientes | ${stats.pagadas} pagadas
+                        </div>
+                    </div>
+                    <div class="detail-item-value">${formatMoney(stats.precio)}/carta</div>
+                </div>
+            `;
+        });
+        html += '</div>';
+        
+    } else if (type === 'cartas') {
+        title.textContent = '✉️ Detalles de Cartas Enviadas';
+        
+        // Agrupar por mes
+        const cartasPorMes = {};
+        cartas.forEach(carta => {
+            const fecha = new Date(carta.fecha);
+            const mes = fecha.toLocaleDateString('es', { month: 'long', year: 'numeric' });
+            cartasPorMes[mes] = (cartasPorMes[mes] || 0) + (carta.cantidad || 1);
+        });
+        
+        html = '<div style="display: grid; gap: 10px;">';
+        Object.keys(cartasPorMes).sort().reverse().forEach(mes => {
+            html += `
+                <div class="detail-item">
+                    <div class="detail-item-name">${mes}</div>
+                    <div class="detail-item-value">${cartasPorMes[mes]} cartas</div>
+                </div>
+            `;
+        });
+        html += '</div>';
+        
+    } else if (type === 'cobrado') {
+        title.textContent = '💰 Detalles de Pagos Recibidos';
+        
+        const pagosPorCasino = {};
+        pagos.forEach(pago => {
+            const casino = casinos.find(c => c.id === pago.casinoId);
+            const nombre = casino ? casino.nombre : 'Desconocido';
+            pagosPorCasino[nombre] = (pagosPorCasino[nombre] || 0) + parseFloat(pago.monto);
+        });
+        
+        html = '<div style="display: grid; gap: 10px;">';
+        Object.keys(pagosPorCasino).forEach(nombre => {
+            html += `
+                <div class="detail-item">
+                    <div class="detail-item-name">${nombre}</div>
+                    <div class="detail-item-value" style="color: var(--success);">
+                        ${formatMoney(pagosPorCasino[nombre])}
+                    </div>
+                </div>
+            `;
+        });
+        html += '</div>';
+        
+    } else if (type === 'porCobrar') {
+        title.textContent = '⏰ Detalles de Cartas Pendientes';
+        
+        const pendientesPorCasino = {};
+        cartas.filter(c => c.estado === 'Pendiente').forEach(carta => {
+            const casino = casinos.find(c => c.id === carta.casinoId);
+            if (casino) {
+                if (!pendientesPorCasino[casino.nombre]) {
+                    pendientesPorCasino[casino.nombre] = {
+                        cantidad: 0,
+                        valor: 0
+                    };
+                }
+                const cant = carta.cantidad || 1;
+                pendientesPorCasino[casino.nombre].cantidad += cant;
+                pendientesPorCasino[casino.nombre].valor += cant * parseFloat(casino.precioPorCarta);
+            }
+        });
+        
+        html = '<div style="display: grid; gap: 10px;">';
+        Object.keys(pendientesPorCasino).forEach(nombre => {
+            const data = pendientesPorCasino[nombre];
+            html += `
+                <div class="detail-item">
+                    <div>
+                        <div class="detail-item-name">${nombre}</div>
+                        <div style="font-size: 12px; color: var(--text-secondary); margin-top: 5px;">
+                            ${data.cantidad} cartas pendientes
+                        </div>
+                    </div>
+                    <div class="detail-item-value" style="color: var(--warning);">
+                        ${formatMoney(data.valor)}
+                    </div>
+                </div>
+            `;
+        });
+        html += '</div>';
+    }
+    
+    content.innerHTML = html || '<p style="text-align: center; padding: 40px; color: var(--text-secondary);">No hay datos disponibles</p>';
+    modal.classList.add('active');
+}
+
+function closeStatDetail() {
+    document.getElementById('modalStatDetail').classList.remove('active');
+}
+
+    </script>
+</body>
+</html>
